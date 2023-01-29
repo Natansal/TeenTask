@@ -67,7 +67,8 @@ router.post("/register", (req, res, next) => {
       }
       database
          .insert("user_access", params, values)
-         .then(() => {
+         .then(({ insertId }) => {
+            user_info.user_id = insertId;
             params = [];
             values = [];
             for (let key in user_info) {
@@ -81,9 +82,13 @@ router.post("/register", (req, res, next) => {
                })
                .catch((err) => {
                   res.status(400).send({ message: "somthing went wrong...", error: err, signed: false });
+                  database.delete("user_access", { user_id: insertId });
                });
          })
          .catch((err) => {
+            if (err.code === "ER_DUP_ENTRY") {
+               return res.status(400).send({ message: "Username already taken", signed: false });
+            }
             res.status(400).send({ message: "somthing went wrong...", error: err, signed: false });
          });
    });

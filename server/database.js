@@ -115,6 +115,20 @@ class Database {
          });
       });
    }
+
+   delete(table, queryObj) {
+      let sql = `DELETE FROM ${table}\
+    ${this.createQueryFromRequest(queryObj)}`;
+      return new Promise((resolve, reject) => {
+         this.con.query(sql, (err, res) => {
+            if (err) {
+               reject(err);
+            } else {
+               resolve(res);
+            }
+         });
+      });
+   }
 }
 
 module.exports = new Database("localhost", "root", "z10mz10m", "TeenTask");
