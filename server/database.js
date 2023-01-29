@@ -9,7 +9,7 @@ function objMap(obj, fn) {
 }
 
 class Database {
-   constructor(host, user, password, database, onConnection) {
+   constructor(host, user, password, database, onConnection = () => {}) {
       this.con = mysql.createConnection({
          host,
          user,
@@ -80,17 +80,41 @@ class Database {
          });
       });
    }
+
+   insert(table, params, values) {
+      values = values.map((val) => `'${val}'`);
+      return new Promise((resolve, reject) => {
+         let sql = `INSERT INTO ${table}\
+        (${params.join(",")}) VALUES\
+        (${values.join(",")})`;
+         this.con.query(sql, (err, res) => {
+            if (err) {
+               reject(err);
+            } else {
+               resolve(res);
+            }
+         });
+      });
+   }
+
+   update(table, cols, values, queryObj) {
+      let params = [];
+      for (let i = 0; i < cols.length; i++) {
+         params.push(`${cols[i]}='${values[i]}'`);
+      }
+      return new Promise((resolve, reject) => {
+         let sql = `UPDATE ${table}\
+         SET ${params.join(",")}\
+         ${createQueryFromRequest(queryObj)}`;
+         this.con.query(sql, (err, res) => {
+            if (err) {
+               reject(err);
+            } else {
+               resolve(res);
+            }
+         });
+      });
+   }
 }
 
-const database = new Database("localhost", "root", "z10mz10m", "TeenTask", () => {
-   database
-      .joinSelect("user_access", "user", "user_id", undefined, ["username", "password"], ["birth_date"])
-      .then((res) => {
-         console.log(res);
-      })
-      .catch((err) => {
-         console.log(err);
-      });
-});
-
-// module.exports = new Database("localhost", "root", "z10mz10m", "TeenTask");
+module.exports = new Database("localhost", "root", "z10mz10m", "TeenTask");
