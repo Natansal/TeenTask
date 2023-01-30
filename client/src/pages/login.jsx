@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import serverAdress from "../serverAdress";
+import { setNewUserContext, UserContext } from "../App"
 
 
 function Login() {
+   const { setNewUserContext } = useContext(UserContext)
    const navigate = useNavigate()
    const [values, setValues] = useState({
       username: "",
@@ -27,7 +29,11 @@ function Login() {
          body: JSON.stringify(values),
       });
       res = await res.json();
-      alert(res.message);
+      if (res.logged) {
+         alert(res.message);
+         setNewUserContext(res.id, res.logged);
+         navigate('/home')
+      }
    }
    function toRegstration() {
       navigate('/registration')
