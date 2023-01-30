@@ -49,7 +49,6 @@ function Registration() {
       const {phone_number, citizen_num} = user_info;
       console.log(regex.test(phone_number));
       if(!regex.test(phone_number) || !regex.test(citizen_num)){
-         
          return alert("Your phone number or citizen number are invalid, please try again.");
       }
       let res = await fetch(`${serverAdress}/user_access/register`, {

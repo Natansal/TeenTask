@@ -11,17 +11,17 @@ function Navbar() {
                <NavLink to="/user/userInfo">User Info</NavLink>
             </li>
             <li>
-               <NavLink to="/user/updatePage">Update Page</NavLink>
+               <NavLink to="/user/updatePage">Update Informat Page</NavLink>
             </li>
             <li>
                <NavLink to="/user/updateBankInfo">Bank details update Page</NavLink>
             </li>
-            {userContext.user_type === 1 && (
+            {userContext.user_type !== 0 && (
                <li>
                   <NavLink to="/user/createJobPage">Create a new Job</NavLink>
                </li>
             )}
-            {userContext.user_type === 0 && (
+            {userContext.user_type !== 1 && (
                <li>
                   <NavLink to="/user/jobs">See all available jobs</NavLink>
                </li>
