@@ -54,10 +54,7 @@ router.post("/login", function (req, res, next) {
 });
 
 router.get("/login", function (req, res, next) {
-   const cookie = req.cookies;
-   console.log(cookie);
-   res.send("hi");
-   return;
+   const cookie = req.cookies.mainCookie;
    return database
       .select("user_access", ["cookie_exp_date", "user_id"], { cookie })
       .then((result) => {
