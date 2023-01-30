@@ -88,7 +88,7 @@ function UpdatePage() {
                     <option value={1}>Employer</option>
                 </select>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     onChange={onChange}
                     name="email"
