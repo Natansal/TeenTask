@@ -7,7 +7,7 @@ import serverAdress from "../serverAdress";
 
 function HomePage() {
     const navigate = useNavigate()
-    const { userContext } = useContext(UserContext)
+    const { userContext, logOut } = useContext(UserContext)
     const [firstName, setFirstName] = useState();
     const getName = async () => {
         const res = await fetch(`${serverAdress}/users/${userContext.userId}/first_name`, {
@@ -34,6 +34,7 @@ function HomePage() {
             <h1>Hello {firstName}</h1>
             <button onClick={toTarget} name="/user/userInfo">User Information</button>
             <button onClick={toTarget} name="/user/updatePage">Update user information </button>
+            <button onClick={logOut} >Logout</button>
             <Outlet />
         </div>
     );
