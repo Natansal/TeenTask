@@ -13,9 +13,8 @@ router.get("/", async function (req, res, next) {
          "job",
          "user_access",
          "user_id",
-         "user_id"[
-            ("job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type")
-         ],
+         "user_id",
+         [("job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type")],
          ["user_name"],
          { ...req.query },
       );
@@ -37,7 +36,15 @@ router.get("/:job_id", async function (req, res, next) {
       queryObj.job_id = job_id;
    }
    try {
-      const emp = await database.select("employee_history", ["*"], queryObj);
+      const emp = await database.joinSelect(
+         "employee_history",
+         "user_access",
+         "user_id",
+         "user_id",
+         [("eh_id", "user_id", "job_id", "paid", "done")],
+         ["user_name"],
+         { ...req.query },
+      );
       res.status(200).send(emp);
    } catch (err) {
       return res.status(400).send({ message: "Something went wrong...", error: err });
