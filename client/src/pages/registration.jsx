@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import serverAdress, { serverKey } from "../serverAdress";
 import { AES } from "crypto-js";
 
+function setCookie(name, value, expirationDate) {
+   document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/;`;
+}
+
 function Registration() {
    const navigate = useNavigate();
    const [user_info, setUserInfo] = useState({
@@ -48,7 +52,7 @@ function Registration() {
       res = await res.json();
       if (res.signed) {
          const encrypted = AES.encrypt(res.cookie, serverKey).toString();
-         document.cookie = encrypted;
+         setCookie("mainCookie", encrypted, new Date(res.expDate));
       }
       alert(res.message);
    }

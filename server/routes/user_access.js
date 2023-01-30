@@ -29,6 +29,7 @@ router.post("/login", function (req, res, next) {
       if (!req.body.cookie) {
          return res.status(400).send({ message: "Missing one or more values", logged: false });
       }
+      console.log(req.body.cookie);
       return database
          .select("user_access", ["cookie_exp_date", "user_id"], { cookie: req.body.cookie })
          .then((result) => {
@@ -53,15 +54,17 @@ router.post("/login", function (req, res, next) {
          if (result.length === 0) {
             return res.status(400).send({ message: "Invalid data!", logged: false });
          } else {
+            let expDate = createExpDate();
             result = result[0];
             if (result.cookie_exp_date.getTime() < new Date().getTime()) {
-               database.update("user_access", ["cookie_exp_date"], [createExpDate()], { user_id: result.user_id });
+               database.update("user_access", ["cookie_exp_date"], [expDate], { user_id: result.user_id });
             }
             return res.status(200).send({
                message: "Logged in successfuly",
                logged: true,
                id: result.user_id,
                cookie: result.cookie,
+               expDate,
             });
          }
       })
@@ -102,6 +105,7 @@ router.post("/register", (req, res, next) => {
                      message: "signed up successfuly",
                      signed: true,
                      cookie,
+                     expDate: user_access.cookie_exp_date,
                   });
                })
                .catch((err) => {
