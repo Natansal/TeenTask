@@ -70,7 +70,7 @@ function App() {
    }, []);
 
    function logOut() {
-      if (window.confirm("Are you sure you want to log out?")) {
+      if (!window.confirm("Are you sure you want to log out?")) {
          return;
       }
       clearAllCookies();
