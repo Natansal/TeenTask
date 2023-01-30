@@ -14,8 +14,8 @@ router.get("/", async function (req, res, next) {
          "user_access",
          "user_id",
          "user_id",
-         [("job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type")],
-         ["user_name"],
+         ["job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
+         ["username"],
          { ...req.query },
       );
       res.status(200).send(jobs);

@@ -22,6 +22,9 @@ router.get("/:userId/:attr", function (req, res) {
 router.put("/:userId", function (req, res) {
    const { password, user_info } = req.body;
    const { userId } = req.params;
+   if (!password || !user_info) {
+      return res.status(400).send({ message: "Invalid data" });
+   }
    console.log(password, user_info, userId);
    params = [];
    values = [];
@@ -39,7 +42,9 @@ router.put("/:userId", function (req, res) {
          console.log("after first then");
          database
             .update("user", params, values, { user_id: userId })
-            .then((response) => res.status(200).send({ message: "Updated successfully", updated: true }))
+            .then((response) =>
+               res.status(200).send({ message: "Updated successfully", updated: true, user_id: userId }),
+            )
             .catch((err) => {
                if (err.code === "ER_DUP_ENTRY") {
                   return res.status(400).send({ message: "Either the email or the citizen id are already in use" });
