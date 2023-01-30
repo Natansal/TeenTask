@@ -5,6 +5,7 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const userAccess = require("./routes/user_access");
+const userInfo = require("./routes/user_info");
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 app.use("/user_access", userAccess);
+app.use("/users", userInfo);
 
 module.exports = app;
