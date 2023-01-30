@@ -2,6 +2,8 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, createContext, Children } from "react";
 import Login from "./pages/login";
 import Registration from "./pages/registration";
+import serverAdress, { serverKey } from "./serverAdress";
+import { AES, enc } from "crypto-js";
 import HomePage from "./pages/home";
 
 
@@ -26,7 +28,6 @@ function UserContextProvider({ children }) {
 }
 
 function App() {
-
    return (
       <UserContextProvider>
          <Routes>
