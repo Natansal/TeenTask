@@ -34,7 +34,6 @@ function clearAllCookies() {
    }
 }
 
-
 function App() {
    const [userContext, setUserContext] = useState({});
    const navigate = useNavigate();
@@ -48,7 +47,8 @@ function App() {
             display: displayType,
          };
       });
-   }
+   };
+
    useEffect(() => {
       let cookie = getCookie("mainCookie");
       if (document.cookie === "" || !cookie) {
@@ -68,9 +68,17 @@ function App() {
             navigate("/user");
          });
    }, []);
-   
+
+   function logOut() {
+      if (window.confirm("Are you sure you want to log out?")) {
+         return;
+      }
+      clearAllCookies();
+      navigate("/login");
+   }
+
    return (
-      <UserContext.Provider value={{ userContext, setNewUserContext }}>
+      <UserContext.Provider value={{ userContext, setNewUserContext, logOut }}>
          <Routes>
             <Route
                index
