@@ -8,12 +8,18 @@ function setCookie(name, value, expirationDate) {
 }
 
 function Login() {
-   const { userContext, setNewUserContext } = useContext(UserContext);
+   const { userContext, setNewUserContext, logOut } = useContext(UserContext);
    const navigate = useNavigate();
    const [values, setValues] = useState({
       username: "",
       password: "",
    });
+
+   useEffect(() => {
+      if (userContext.userId) {
+         navigate("/user");
+      }
+   }, []);
 
    function onChange(e) {
       setValues((prev) => {
@@ -34,9 +40,11 @@ function Login() {
       res = await res.json();
       if (res.logged) {
          // alert(res.message);
-         setNewUserContext(res.id, res.logged, res.user_type);
+         setNewUserContext(res.id, res.user_type);
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
          navigate("/user");
+      } else {
+         alert(res.message);
       }
    }
 
