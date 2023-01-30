@@ -33,13 +33,14 @@ router.put("/:userId", function (req, res) {
    database
       .select("user_access", ["user_id"], { password, user_id: userId })
       .then((result) => {
+         console.log(result);
          if (result.length === 0) {
             return res.status(400).send({ message: "Password Incorrect", error: err });
          }
          console.log("after first then");
          database
             .update("user", params, values, { user_id: userId })
-            .then((response) => res.status(200).send({ message: "Updated successfully", updated: true },console.log("after second then"))))
+            .then((response) => res.status(200).send({ message: "Updated successfully", updated: true }))
             .catch((err) => res.status(400).send({ message: "Something went wrong1", error: err }));
          if (req.body.user_type) {
             if (req.body.user_type == 1) {

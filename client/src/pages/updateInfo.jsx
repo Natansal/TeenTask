@@ -48,8 +48,10 @@ function UpdatePage() {
         if (res.updated) {
             alert(res.message)
             navigate("/user/userInfo");
+        } else {
+            alert(res.message);
+            
         }
-        alert(res.message);
     }
 
 
