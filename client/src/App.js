@@ -2,7 +2,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import React, { useState, createContext, useEffect } from "react";
 import Login from "./pages/login";
 import Registration from "./pages/registration";
-import HomePage from "./pages/home";
+import HomePage from "./pages/user";
+import UserInfo from "./pages/userInfo";
 import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 
@@ -76,9 +77,14 @@ function App() {
                element={<Registration />}
             />
             <Route
-               path="/home"
+               path="/user"
                element={<HomePage />}
-            />
+            >
+               <Route
+                  path="userInfo"
+                  element={<UserInfo />}
+               />
+            </Route>
          </Routes>
       </UserContextProvider>
    );

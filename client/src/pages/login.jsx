@@ -36,7 +36,7 @@ function Login() {
          alert(res.message);
          setNewUserContext(res.id, res.logged);
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
-         navigate("/home");
+         navigate("/user");
       }
    }
 

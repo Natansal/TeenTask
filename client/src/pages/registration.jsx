@@ -54,7 +54,7 @@ function Registration() {
       if (res.signed) {
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
          setNewUserContext(res.userId, res.signed);
-         navigate("/home");
+         navigate("/user");
       }
       alert(res.message);
    }
