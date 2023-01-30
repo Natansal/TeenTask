@@ -29,7 +29,15 @@ router.post("/login", function (req, res, next) {
       return res.status(400).send({ message: "Missing one or more values", logged: false });
    }
    database
-      .joinSelect("user_access", "user", "user_id", "user_id", ["user_id", "username", "password", "cookie", "cookie_exp_date"], ["user_type"], { ...req.body })
+      .joinSelect(
+         "user_access",
+         "user",
+         "user_id",
+         "user_id",
+         ["user_id", "username", "password", "cookie", "cookie_exp_date"],
+         ["user_type"],
+         { ...req.body },
+      )
       .then((result) => {
          console.log("resulet", result);
          if (result.length === 0) {
@@ -58,7 +66,15 @@ router.post("/login", function (req, res, next) {
 router.get("/login", function (req, res, next) {
    const cookie = req.cookies.mainCookie;
    return database
-      .select("user_access", ["cookie_exp_date", "user_id"], { cookie })
+      .joinSelect(
+         "user_access",
+         "user",
+         "user_id",
+         "user_id",
+         ["user_id", "username", "password", "cookie", "cookie_exp_date"],
+         ["user_type"],
+         { cookie },
+      )
       .then((result) => {
          if (!result || result.length === 0) {
             return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
@@ -71,7 +87,7 @@ router.get("/login", function (req, res, next) {
             message: "Logged in successfuly",
             logged: true,
             id: result[0].user_id,
-            user_type: result[0].user_type
+            user_type: result[0].user_type,
          });
       })
       .catch((err) => res.status(400).send({ message: "somthing went wrong...", error: err, signed: false }));
@@ -111,7 +127,7 @@ router.post("/register", (req, res, next) => {
                      cookie,
                      expDate: user_access.cookie_exp_date,
                      userId: insertId,
-                     user_type: user_info.user_type
+                     user_type: user_info.user_type,
                   });
                })
                .catch((err) => {

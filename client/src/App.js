@@ -41,13 +41,12 @@ function App() {
    const [userContext, setUserContext] = useState({});
    const navigate = useNavigate();
 
-   const setNewUserContext = (user_id, displayType, userType) => {
+   const setNewUserContext = (user_id, userType) => {
       return setUserContext((prev) => {
          console.log(userContext);
          return {
             ...prev,
             userId: user_id,
-            display: displayType,
             user_type: userType,
          };
       });
@@ -68,7 +67,7 @@ function App() {
                alert(res.message);
                return navigate("/login");
             }
-            setNewUserContext(res.id, isMobilePhone());
+            setNewUserContext(res.id, res.user_type);
             navigate("/user");
          });
    }, []);
@@ -78,6 +77,7 @@ function App() {
          return;
       }
       clearAllCookies();
+      setUserContext({});
       navigate("/login");
    }
 
