@@ -53,7 +53,7 @@ function Registration() {
       res = await res.json();
       if (res.signed) {
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
-         setNewUserContext(res.userId, res.signed);
+         setNewUserContext(res.userId, res.signed, res.user_type);
          navigate("/user");
       }
       alert(res.message);

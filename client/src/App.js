@@ -39,13 +39,14 @@ function App() {
    const [userContext, setUserContext] = useState({});
    const navigate = useNavigate();
 
-   const setNewUserContext = (user_id, displayType) => {
+   const setNewUserContext = (user_id, displayType, userType) => {
       return setUserContext((prev) => {
          console.log(userContext);
          return {
             ...prev,
             userId: user_id,
             display: displayType,
+            user_type: userType
          };
       });
    };

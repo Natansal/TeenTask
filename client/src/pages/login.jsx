@@ -33,8 +33,8 @@ function Login() {
       });
       res = await res.json();
       if (res.logged) {
-         alert(res.message);
-         setNewUserContext(res.id, res.logged);
+         // alert(res.message);
+         setNewUserContext(res.id, res.logged, res.user_type);
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
          navigate("/user");
       }

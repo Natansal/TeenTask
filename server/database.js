@@ -3,13 +3,20 @@ const mysql = require("mysql");
 function objMap(obj, fn) {
    let mapped = {};
    for (let key in obj) {
-      mapped[key] = fn(obj[key]);
+      mapped[key] = fn(obj[key], key);
    }
    return mapped;
 }
 
+function objForEach(obj, fn) {
+   for (let key in obj) {
+      fn(obj[key], key);
+   }
+   return obj;
+}
+
 class Database {
-   constructor(host, user, password, database, onConnection = () => {}) {
+   constructor(host, user, password, database, onConnection = () => { }) {
       this.con = mysql.createConnection({
          host,
          user,
@@ -55,14 +62,14 @@ class Database {
       });
    }
 
-   joinSelect(table1, table2, join1, join2, params1 = [], params2 = [], queryObj1 = {}, queryObj2 = {}) {
+   joinSelect(table1, table2, join1, join2 = join1, params1 = [], params2 = [], queryObj1 = {}, queryObj2 = {}) {
       if (!join2) {
          join2 = join1;
       }
       let params = [...params1.map((val) => `${table1}.${val}`), ...params2.map((val) => `${table2}.${val}`)];
       let queryObj = {
-         ...objMap(queryObj1, (val) => `${table1}.${val}`),
-         ...objMap(queryObj2, (val) => `${table2}.${val}`),
+         ...objForEach(queryObj1, (val, key) => { queryObj1[`${table1}.${key}`] = val; delete queryObj1[key] }),
+         ...objForEach(queryObj2, (val, key) => { queryObj2[`${table2}.${key}`] = val; delete queryObj2[key] })
       };
       console.log(params, queryObj);
       return new Promise((resolve, reject) => {
