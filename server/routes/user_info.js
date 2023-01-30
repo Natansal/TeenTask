@@ -39,7 +39,7 @@ router.put("/:userId", function (req, res) {
          console.log("after first then");
          database
             .update("user", params, values, { user_id: userId })
-            .then((response = res.status(200).send({ message: "Updated successfully", updated: true },console.log("after second then"))))
+            .then((response) => res.status(200).send({ message: "Updated successfully", updated: true },console.log("after second then"))))
             .catch((err) => res.status(400).send({ message: "Something went wrong1", error: err }));
          if (req.body.user_type) {
             if (req.body.user_type == 1) {
