@@ -35,7 +35,7 @@ router.put("/:userId", function (req, res) {
       .then((result) => {
          console.log(result);
          if (result.length === 0) {
-            return res.status(400).send({ message: "Password Incorrect", error: err });
+            return res.status(400).send({ message: "Password Incorrect" });
          }
          console.log("after first then");
          database
