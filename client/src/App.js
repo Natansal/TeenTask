@@ -18,7 +18,7 @@ function getCookie(name) {
    }
 }
 
-function UserContextProvider({ children }) {
+function App() {
    const [userContext, setUserContext] = useState({});
 
    const setNewUserContext = (user_id, displayType) => {
@@ -32,10 +32,6 @@ function UserContextProvider({ children }) {
       });
    };
 
-   return <UserContext.Provider value={{ userContext, setNewUserContext }}>{children}</UserContext.Provider>;
-}
-
-function App() {
    const navigate = useNavigate();
    useEffect(() => {
       let cookie = getCookie("mainCookie");
@@ -52,11 +48,12 @@ function App() {
                alert(res.message);
                return navigate("/login");
             }
-            navigate("/home");
+            setNewUserContext(res.id, true)
+            navigate("/user");
          });
    }, []);
    return (
-      <UserContextProvider>
+      <UserContext.Provider value={{ userContext, setNewUserContext }}>
          <Routes>
             <Route
                index
@@ -85,7 +82,7 @@ function App() {
                />
             </Route>
          </Routes>
-      </UserContextProvider>
+      </UserContext.Provider>
    );
 }
 
