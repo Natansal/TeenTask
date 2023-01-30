@@ -26,7 +26,26 @@ function createExpDate() {
 
 router.post("/login", function (req, res, next) {
    if (!req.body || !req.body.username || !req.body.password) {
-      return res.status(400).send({ message: "Missing one or more values", logged: false });
+      if (!req.body.cookie) {
+         return res.status(400).send({ message: "Missing one or more values", logged: false });
+      }
+      database
+         .select("user_access", ["cookie_exp_date", "user_id"], { cookie: req.body.cookie })
+         .then((result) => {
+            if (!result || result.length === 0) {
+               return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
+            }
+            let time = result[0].cookie_exp_date;
+            if (new Date(time).getTime() < new Date().getTime()) {
+               return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
+            }
+            return res.status(200).send({
+               message: "Logged in successfuly",
+               logged: true,
+               id: result.user_id,
+            });
+         })
+         .catch((err) => res.status(400).send({ message: "somthing went wrong...", error: err, signed: false }));
    }
    database
       .select("user_access", undefined, { ...req.body })
