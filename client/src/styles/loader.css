@@ -1,0 +1,131 @@
+#loaderPage {
+   font-family: sans-serif;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   background: #010001;
+   color: white;
+   font-size: 1.5rem;
+}
+
+.pencil {
+   animation: pencil-animation 10s infinite;
+   height: 40px;
+   position: relative;
+   transform: rotate(135deg);
+   transform-origin: center;
+   width: 300px;
+}
+
+@keyframes pencil-animation {
+   0% {
+      transform: rotate(135deg);
+   }
+
+   20% {
+      transform: rotate(315deg);
+   }
+
+   45% {
+      transform: translateX(300px) rotate(315deg);
+   }
+
+   55% {
+      transform: translateX(300px) rotate(495deg);
+   }
+
+   100% {
+      transform: rotate(495deg);
+   }
+}
+
+.pencil__ball-point {
+   background: #09d56e;
+   border-radius: 50px;
+   height: 10px;
+   left: 0;
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 10px;
+}
+
+.pencil__cap {
+   background: #232123;
+   clip-path: polygon(20% 40%, 100% 0%, 100% 100%, 20% 60%);
+   height: 100%;
+   left: 0px;
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 12%;
+}
+
+.pencil__cap-base {
+   background: #232123;
+   height: 100%;
+   left: 12%;
+   position: absolute;
+   top: 0;
+   width: 20px;
+}
+
+.pencil__middle {
+   background: #09d56e;
+   height: 100%;
+   left: 32px;
+   position: absolute;
+   top: 0;
+   width: 70%;
+}
+
+.pencil__eraser {
+   background: #232123;
+   border-bottom-right-radius: 5px;
+   border-top-right-radius: 5px;
+   height: 100%;
+   left: 260px;
+   position: absolute;
+   top: 0;
+   width: 11%;
+}
+
+.line {
+   animation: line-animation 10s infinite;
+   background: #09d56e;
+   border-radius: 50px;
+   height: 10px;
+   position: relative;
+   right: 103px;
+   top: 80px;
+   transform: scaleX(0);
+   transform-origin: center;
+   width: 1000px;
+   z-index: 999;
+}
+
+@keyframes line-animation {
+   20% {
+      transform: scaleX(0);
+   }
+
+   45% {
+      transform: scaleX(0.6);
+   }
+
+   55% {
+      transform: scaleX(0.6);
+   }
+
+   100% {
+      transform: scaleX(0);
+   }
+}
+
+#loaderPage h2 {
+   position: relative;
+   top: 150px;
+   right: 75px;
+}

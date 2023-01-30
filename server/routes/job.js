@@ -44,7 +44,8 @@ router.post("/", async function (req, res, next) {
       !req.body.category ||
       !req.body.payment ||
       !req.body.start_date ||
-      !req.body.payment_type
+      !req.body.payment_type ||
+      !req.body.end_date
    ) {
       return res.status(400).send({ messasge: "Invalid data" });
    }

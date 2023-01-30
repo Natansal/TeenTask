@@ -1,111 +1,159 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import serverAdress from "../serverAdress";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
-const Form = () => {
-   const [bankAccountNumber, setBankAccountNumber] = useState("");
-   const [creditCardType, setCreditCardType] = useState("");
-   const [cardNumber, setCardNumber] = useState("");
-   const [expirationDate, setExpirationDate] = useState("");
-   const [cvv, setCvv] = useState("");
+function UpdateBankInfo() {
+   const navigate = useNavigate();
+   const [values, setValues] = useState({
+      bank_account: "",
+      card_type: "",
+      card_num: "",
+      exp_date: "",
+      cvv: "",
+   });
+   const [password, setPassword] = useState("");
    const [errors, setErrors] = useState({});
+   const { userContext } = useContext(UserContext);
 
    const validate = () => {
       let newErrors = {};
-
       // Bank Account Number validation
-      const bankAccountNumberRegex = /^[0-9]+$/;
-      if (!bankAccountNumberRegex.test(bankAccountNumber)) {
-         newErrors.bankAccountNumber = "Invalid Bank Account Number";
+      const bank_accountRegex = /^[0-9]+$/;
+      if (!bank_accountRegex.test(values.bank_account)) {
+         newErrors.bank_account = "Invalid Bank Account Number";
       }
-
       // Credit Card Type validation
-      if (!creditCardType) {
-         newErrors.creditCardType = "Credit Card Type is required";
+      if (!values.card_type) {
+         newErrors.card_type = "Credit Card Type is required";
       }
 
       // Card Number validation
-      const cardNumberRegex = /^[0-9]+$/;
-      if (!cardNumberRegex.test(cardNumber)) {
-         newErrors.cardNumber = "Invalid Card Number";
+      const card_numRegex = /^[0-9]{12,16}$/;
+      if (!card_numRegex.test(values.card_num)) {
+         newErrors.card_num = "Invalid Card Number";
       }
 
       // Expiration Date validation
-      const expirationDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-      if (!expirationDateRegex.test(expirationDate)) {
-         newErrors.expirationDate = "Invalid Expiration Date (MM/YY)";
+      const exp_dateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+      if (!exp_dateRegex.test(values.exp_date)) {
+         newErrors.exp_date = "Invalid Expiration Date (MM/YY)";
       }
 
       // CVV validation
       const cvvRegex = /^[0-9]{3,4}$/;
-      if (!cvvRegex.test(cvv)) {
+      if (!cvvRegex.test(values.cvv)) {
          newErrors.cvv = "Invalid CVV";
+      }
+
+      // password validation
+      if (!password || password === "") {
+         newErrors.password = "Password is required";
       }
 
       return newErrors;
    };
 
-   const handleSubmit = (e) => {
+   function handleSubmit(e) {
       e.preventDefault();
       const errors = validate();
       if (Object.keys(errors).length === 0) {
-         // submit form
-      } else {
-         setErrors(errors);
+         let obj = { ...values };
+         for (let key in obj) {
+            if (obj[key] === "") {
+               delete obj[key];
+            }
+         }
+         fetch(`${serverAdress}/users/${userContext.userId}`, {
+            method: "PUT",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ user_info: obj, password }),
+         })
+            .then((res) => res.json())
+            .then((res) => alert(res.message))
+            .then((res) => navigate("/user/updateBankInfo"));
       }
-   };
+      setErrors(errors);
+   }
+
+   function handleChange(e) {
+      const { name, value } = e.target;
+      if (name === "password") {
+         return setPassword(value);
+      }
+      setValues((prev) => {
+         return {
+            ...prev,
+            [name]: value,
+         };
+      });
+   }
 
    return (
       <form onSubmit={handleSubmit}>
-         <label htmlFor="bankAccountNumber">Bank Account Number:</label>
+         <label htmlFor="bank_account">Bank Account Number:</label>
          <input
-            id="bankAccountNumber"
+            id="bank_account"
+            name="bank_account"
             type="text"
-            value={bankAccountNumber}
-            onChange={(e) => setBankAccountNumber(e.target.value)}
+            value={values.bank_account}
+            onChange={handleChange}
          />
-         {errors.bankAccountNumber && <p style={{ color: "red" }}>{errors.bankAccountNumber}</p>}
+         {errors.bank_account && <p style={{ color: "red" }}>{errors.bank_account}</p>}
 
-         <label htmlFor="creditCardType">Credit Card Type:</label>
+         <label htmlFor="card_type">Credit Card Type:</label>
          <select
-            id="creditCardType"
-            value={creditCardType}
-            onChange={(e) => setCreditCardType(e.target.value)}
+            name="card_type"
+            id="card_type"
+            value={values.card_type}
+            onChange={handleChange}
          >
             <option value="">Select a Type</option>
             <option value="visa">Visa</option>
             <option value="mastercard">Mastercard</option>
             <option value="amex">American Express</option>
          </select>
-         {errors.creditCardType && <p style={{ color: "red" }}>{errors.creditCardType}</p>}
-         <label htmlFor="cardNumber">Card Number:</label>
+         {errors.card_type && <p style={{ color: "red" }}>{errors.card_type}</p>}
+         <label htmlFor="card_num">Card Number:</label>
          <input
-            id="cardNumber"
+            id="card_num"
+            name="card_num"
             type="text"
-            value={cardNumber}
-            onChange={(e) => setCardNumber(e.target.value)}
+            value={values.card_num}
+            onChange={handleChange}
          />
-         {errors.cardNumber && <p style={{ color: "red" }}>{errors.cardNumber}</p>}
+         {errors.card_num && <p style={{ color: "red" }}>{errors.card_num}</p>}
 
-         <label htmlFor="expirationDate">Expiration Date:</label>
+         <label htmlFor="exp_date">Expiration Date:</label>
          <input
-            id="expirationDate"
+            id="exp_date"
+            name="exp_date"
             type="text"
-            value={expirationDate}
-            onChange={(e) => setExpirationDate(e.target.value)}
+            value={values.exp_date}
+            onChange={handleChange}
          />
-         {errors.expirationDate && <p style={{ color: "red" }}>{errors.expirationDate}</p>}
+         {errors.exp_date && <p style={{ color: "red" }}>{errors.exp_date}</p>}
 
          <label htmlFor="cvv">CVV:</label>
          <input
             id="cvv"
+            name="cvv"
             type="text"
-            value={cvv}
-            onChange={(e) => setCvv(e.target.value)}
+            value={values.cvv}
+            onChange={handleChange}
          />
          {errors.cvv && <p style={{ color: "red" }}>{errors.cvv}</p>}
-
+         <label htmlFor="password">Password:</label>
+         <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+         />
+         {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
          <button type="submit">Submit</button>
       </form>
    );
-};
+}
 
-export default Form;
+export default UpdateBankInfo;

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import Navbar from "./navbar";
 import serverAdress from "../serverAdress";
+import Loading from "./Loader";
 
 function HomePage() {
    const navigate = useNavigate();
@@ -22,30 +24,14 @@ function HomePage() {
    useEffect(() => {
       getName().then((name) => setFirstName(name));
    }, [userContext.userId]);
-
-   const toTarget = (e) => {
-      navigate(e.target.name);
-   };
    if (!firstName) {
-      return <h1>Loading...</h1>;
+      return <Loading />;
    }
 
    return (
       <div>
          <h1>Hello {firstName}</h1>
-         <button
-            onClick={toTarget}
-            name="/user/userInfo"
-         >
-            User Information
-         </button>
-         <button
-            onClick={toTarget}
-            name="/user/updatePage"
-         >
-            Update user information{" "}
-         </button>
-         <button onClick={logOut}>Logout</button>
+         <Navbar />
          <Outlet />
       </div>
    );

@@ -7,7 +7,7 @@ import UserInfo from "./pages/userInfo";
 import UpdatePage from "./pages/updateInfo";
 import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
-
+import UpdateBankInfo from "./pages/UpdateBankInfo";
 export const UserContext = createContext();
 
 function isMobilePhone() {
@@ -108,6 +108,10 @@ function App() {
                <Route
                   path="updatePage"
                   element={<UpdatePage />}
+               />
+               <Route
+                  path="updateBankInfo"
+                  element={<UpdateBankInfo />}
                />
             </Route>
          </Routes>
