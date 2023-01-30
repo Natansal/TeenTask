@@ -84,6 +84,7 @@ router.post("/register", (req, res, next) => {
          params.push(key);
          values.push(user_access[key]);
       }
+      console.log(user_access);
       database
          .insert("user_access", params, values)
          .then(({ insertId }) => {
