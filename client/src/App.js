@@ -14,7 +14,8 @@ function getCookie(name) {
    const parts = value.split(`; ${name}=`);
    if (parts.length === 2) {
       let cookie = parts.pop().split(";").shift();
-      return AES.decrypt(cookie, serverKey).toString(enc.Utf8);
+      cookie = AES.decrypt(cookie, serverKey).toString(enc.Utf8);
+      return cookie;
    }
 }
 
@@ -39,15 +40,13 @@ function App() {
    const navigate = useNavigate();
    useEffect(() => {
       let cookie = getCookie("mainCookie");
-      console.log(cookie);
       if (document.cookie === "" || !cookie) {
-         navigate("/login");
+         return navigate("/login");
       }
       fetch(`${serverAdress}/user_access/login`, {
+         credentials: "include",
          method: "GET",
-         headers: {
-            Cookie: "mainCookie=" + cookie,
-         },
+         "Access-Control-Allow-Origin": true,
       })
          .then((res) => res.json())
          .then((res) => {
