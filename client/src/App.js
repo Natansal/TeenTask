@@ -44,7 +44,6 @@ function App() {
       fetch(`${serverAdress}/user_access/login`, {
          credentials: "include",
          method: "GET",
-         "Access-Control-Allow-Origin": true,
       })
          .then((res) => res.json())
          .then((res) => {

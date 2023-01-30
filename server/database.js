@@ -129,6 +129,18 @@ class Database {
          });
       });
    }
+
+   async checkCookie(cookie) {
+      if (!cookie) {
+         return -1;
+      }
+      let user = await this.select("user_access", ["user_id"], { cookie });
+      if (user.length === 0) {
+         return -1;
+      }
+      let id = user[0].user_id;
+      return id;
+   }
 }
 
 module.exports = new Database("localhost", "root", "z10mz10m", "TeenTask");

@@ -6,6 +6,8 @@ const cors = require("cors");
 
 const userAccess = require("./routes/user_access");
 const userInfo = require("./routes/user_info");
+const jobRouter = require("./routes/job");
+const reviewRouter = require("./routes/reviews");
 
 const app = express();
 
@@ -18,5 +20,7 @@ app.use(cors({ credentials: true, origin: true }));
 
 app.use("/user_access", userAccess);
 app.use("/users", userInfo);
+app.use("/jobs", jobRouter);
+app.use("reviews", reviewRouter);
 
 module.exports = app;
