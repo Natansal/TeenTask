@@ -103,16 +103,20 @@ class Database {
          params.push(`${cols[i]}='${values[i]}'`);
       }
       return new Promise((resolve, reject) => {
-         let sql = `UPDATE ${table}\
-         SET ${params.join(",")}\
-         ${this.createQueryFromRequest(queryObj)}`;
-         this.con.query(sql, (err, res) => {
-            if (err) {
-               reject(err);
-            } else {
-               resolve(res);
-            }
-         });
+         try {
+            let sql = `UPDATE ${table}\
+            SET ${params.join(",")}\
+            ${this.createQueryFromRequest(queryObj)}`;
+            this.con.query(sql, (err, res) => {
+               if (err) {
+                  reject(err);
+               } else {
+                  resolve(res);
+               }
+            });
+         } catch (err) {
+            reject(err);
+         }
       });
    }
 
