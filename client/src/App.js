@@ -1,8 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import Login from "./pages/login";
 import Registration from "./pages/registration";
 import HomePage from "./pages/home";
+import { AES, enc } from "crypto-js";
+import serverAdress, { serverKey } from "./serverAdress";
+import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
 
@@ -23,16 +26,13 @@ function UserContextProvider({ children }) {
          console.log(userContext);
          return {
             ...prev,
-            userId: user_id, display: displayType
-         }
-      })
-   }
+            userId: user_id,
+            display: displayType,
+         };
+      });
+   };
 
-   return (
-      <UserContext.Provider value={{ userContext, setNewUserContext }}>
-         {children}
-      </UserContext.Provider>
-   )
+   return <UserContext.Provider value={{ userContext, setNewUserContext }}>{children}</UserContext.Provider>;
 }
 
 function App() {
