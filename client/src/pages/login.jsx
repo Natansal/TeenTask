@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import serverAdress from "../serverAdress";
 
+
 function Login() {
+   const navigate = useNavigate()
    const [values, setValues] = useState({
       username: "",
       password: "",
@@ -26,6 +29,9 @@ function Login() {
       res = await res.json();
       alert(res.message);
    }
+   function toRegstration() {
+      navigate('/registration')
+   }
 
    return (
       <div className="loginPage">
@@ -49,6 +55,7 @@ function Login() {
                value="login"
             />
          </form>
+         <button onClick={toRegstration}>Registration</button>
       </div>
    );
 }

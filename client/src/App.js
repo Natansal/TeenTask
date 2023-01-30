@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Login from "./pages/login";
+import Registration from "./pages/registration";
 
 function App() {
-   const navigate = useNavigate();
    return (
       <Routes>
          <Route
@@ -18,6 +18,10 @@ function App() {
          <Route
             path="/login"
             element={<Login />}
+         />
+         <Route
+            path="/registration"
+            element={<Registration />}
          />
       </Routes>
    );
