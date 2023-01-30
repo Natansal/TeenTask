@@ -5,6 +5,7 @@ import Registration from "./pages/registration";
 import HomePage from "./pages/user";
 import UserInfo from "./pages/userInfo";
 import UpdatePage from "./pages/updateInfo";
+import CreateJob from "./pages/createJob";
 import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 
@@ -109,6 +110,11 @@ function App() {
                   path="updatePage"
                   element={<UpdatePage />}
                />
+               <Route
+                  path="createJobPage"
+                  element={<CreateJob />}
+               />
+               
             </Route>
          </Routes>
       </UserContext.Provider>

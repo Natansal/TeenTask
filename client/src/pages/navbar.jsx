@@ -14,6 +14,9 @@ function Navbar() {
                     <NavLink to="/user/updatePage">Update Page</NavLink>
                 </li>
                 <li>
+                    <NavLink to="/user/createJobPage">Create a new Job</NavLink>
+                </li>
+                <li>
                     <a href="#" onClick={logOut}>
                         Logout
                     </a>
