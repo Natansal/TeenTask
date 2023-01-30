@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import Registration from "./pages/registration";
 import HomePage from "./pages/user";
 import UserInfo from "./pages/userInfo";
+import UpdatePage from "./pages/updateInfo";
 import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 
@@ -95,6 +96,10 @@ function App() {
                <Route
                   path="userInfo"
                   element={<UserInfo />}
+               />
+               <Route
+                  path="updatePage"
+                  element={<UpdatePage />}
                />
             </Route>
          </Routes>

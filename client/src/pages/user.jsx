@@ -33,7 +33,7 @@ function HomePage() {
         <div>
             <h1>Hello {firstName}</h1>
             <button onClick={toTarget} name="/user/userInfo">User Information</button>
-            {/* <button onClick={toTarget} name="/user/paymentInfo">User Payment Information</button> */}
+            <button onClick={toTarget} name="/user/updatePage">Update user information </button>
             <Outlet />
         </div>
     );

@@ -105,7 +105,7 @@ class Database {
       return new Promise((resolve, reject) => {
          let sql = `UPDATE ${table}\
          SET ${params.join(",")}\
-         ${createQueryFromRequest(queryObj)}`;
+         ${this.createQueryFromRequest(queryObj)}`;
          this.con.query(sql, (err, res) => {
             if (err) {
                reject(err);

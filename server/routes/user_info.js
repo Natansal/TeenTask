@@ -22,7 +22,8 @@ router.get("/:userId/:attr", function (req, res) {
 router.put("/:userId", function (req, res) {
    const { password, user_info } = req.body;
    const { userId } = req.params;
-   userId;
+
+   console.log(password, user_info, userId);
    params = [];
    values = [];
    for (let key in user_info) {
@@ -35,10 +36,11 @@ router.put("/:userId", function (req, res) {
          if (result.length === 0) {
             return res.status(400).send({ message: "Password Incorrect", error: err });
          }
+         console.log("after first then");
          database
-            .update("user", cols, values, { user_id: userId })
-            .then((response = res.status(200).send({ message: "Updated successfully" })))
-            .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
+            .update("user", params, values, { user_id: userId })
+            .then((response = res.status(200).send({ message: "Updated successfully", updated: true },console.log("after second then"))))
+            .catch((err) => res.status(400).send({ message: "Something went wrong1", error: err }));
          if (req.body.user_type) {
             if (req.body.user_type == 1) {
                //if he was an employee
@@ -49,7 +51,7 @@ router.put("/:userId", function (req, res) {
             }
          }
       })
-      .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
+      .catch((err) => res.status(400).send({ message: "Something went wrong2", error: err }));
 });
 
 module.exports = router;

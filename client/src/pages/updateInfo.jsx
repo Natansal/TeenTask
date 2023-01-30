@@ -15,18 +15,13 @@ function UpdatePage() {
         birth_date: "",
         city: "",
         state: "",
-        citizen_num: "",
+        citizen_num: ""
     });
     const [password, setPassword] = useState("");
 
     function onChange(e) {
         if (e.target.name === "password") {
-            return setUserAccess((prev) => {
-                return {
-                    ...prev,
-                    [e.target.name]: e.target.value,
-                };
-            });
+            return setPassword((prev) => prev = e.target.value);
         }
         setUserInfo((prev) => {
             return {
@@ -38,13 +33,20 @@ function UpdatePage() {
 
     async function onSubmit(e) {
         e.preventDefault();
+        let obj = { ...user_info };
+        for (let key in obj) {
+            if (obj[key] === "") {
+                delete obj[key];
+            }
+        }
         let res = await fetch(`${serverAdress}/users/${userContext.userId}`, {
             method: "PUT",
             headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ password, user_info}),
+            body: JSON.stringify({ password, user_info: obj }),
         });
         res = await res.json();
-        if (res.message) {
+        if (res.updated) {
+            alert(res.message)
             navigate("/user/userInfo");
         }
         alert(res.message);
@@ -59,7 +61,7 @@ function UpdatePage() {
                     placeholder="password"
                     onChange={onChange}
                     name="password"
-                    value={user_access.password}
+                    value={password}
                 />
                 <input
                     type="text"
@@ -84,7 +86,7 @@ function UpdatePage() {
                     <option value={1}>Employer</option>
                 </select>
                 <input
-                    type="email"
+                    type="text"
                     placeholder="Email"
                     onChange={onChange}
                     name="email"
