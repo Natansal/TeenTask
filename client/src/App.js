@@ -12,9 +12,8 @@ function getCookie(name) {
    const value = `; ${document.cookie}`;
    const parts = value.split(`; ${name}=`);
    if (parts.length === 2) {
-      return parts.pop().split(";").shift();
-   } else {
-      return "";
+      let cookie = parts.pop().split(";").shift();
+      return AES.decrypt(cookie, serverKey).toString(enc.Utf8);
    }
 }
 
@@ -36,21 +35,24 @@ function UserContextProvider({ children }) {
 function App() {
    const navigate = useNavigate();
    useEffect(() => {
-      if (document.cookie === "") {
+      let cookie = getCookie("mainCookie");
+      console.log(cookie);
+      if (document.cookie === "" || !cookie) {
          navigate("/login");
       }
-      let cookie = getCookie("mainCookie");
       fetch(`${serverAdress}/user_access/login`, {
-         method: "POST",
-         headers: { "Content-type": "application/json" },
-         body: JSON.stringify({ cookie: AES.decrypt(cookie, serverKey).toString(enc.Utf8) }),
+         method: "GET",
+         headers: {
+            Cookie: "mainCookie=" + cookie,
+         },
       })
          .then((res) => res.json())
          .then((res) => {
             if (!res.logged) {
+               alert(res.message);
                return navigate("/login");
             }
-            navigate("home");
+            navigate("/home");
          });
    }, []);
    return (
