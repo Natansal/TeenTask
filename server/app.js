@@ -21,6 +21,6 @@ app.use(cors({ credentials: true, origin: true }));
 app.use("/user_access", userAccess);
 app.use("/users", userInfo);
 app.use("/jobs", jobRouter);
-app.use("reviews", reviewRouter);
+app.use("/reviews", reviewRouter);
 
 module.exports = app;

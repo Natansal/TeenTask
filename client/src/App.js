@@ -9,6 +9,8 @@ import CreateJob from "./pages/createJob";
 import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 import UpdateBankInfo from "./pages/UpdateBankInfo";
+import Jobs from "./pages/allJobs";
+
 export const UserContext = createContext();
 
 function isMobilePhone() {
@@ -46,7 +48,7 @@ function App() {
             ...prev,
             userId: user_id,
             display: displayType,
-            user_type: userType
+            user_type: userType,
          };
       });
    };
@@ -118,6 +120,10 @@ function App() {
                <Route
                   path="updateBankInfo"
                   element={<UpdateBankInfo />}
+               />
+               <Route
+                  path="jobs"
+                  element={<Jobs />}
                />
             </Route>
          </Routes>
