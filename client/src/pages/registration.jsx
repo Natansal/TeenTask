@@ -55,7 +55,7 @@ function Registration() {
         if (res.signed) {
             const encrypted = AES.encrypt(res.cookie, serverKey).toString();
             setCookie("mainCookie", encrypted, new Date(res.expDate));
-            // setNewUserContext(res.id, res.signed);
+            setNewUserContext(res.userId, res.signed);
             navigate("/home");
         }
         alert(res.message);
