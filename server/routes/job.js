@@ -9,7 +9,16 @@ router.get("/", async function (req, res, next) {
       return res.status(400).send({ message: "unknown user" });
    }
    try {
-      const jobs = await database.select("job", ["*"], { ...req.query });
+      const jobs = await database.joinSelect(
+         "job",
+         "user_access",
+         "user_id",
+         "user_id"[
+            ("job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type")
+         ],
+         ["user_name"],
+         { ...req.query },
+      );
       res.status(200).send(jobs);
    } catch (err) {
       return res.status(400).send({ message: "Something went wrong...", error: err });
