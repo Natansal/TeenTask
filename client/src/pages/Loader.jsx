@@ -7,12 +7,6 @@ function Loading() {
       setTimeout(() => {
          setLoading((prev) => false);
       }, 5000);
-      let timeout = setTimeout(() => {
-         window.location.reload();
-      }, 10000);
-      return () => {
-         clearTimeout(timeout);
-      };
    }, []);
    return (
       <div id="loaderPage">
