@@ -30,24 +30,15 @@ function HomePage() {
       return <h1>Loading...</h1>;
    }
 
-   return (
-      <div>
-         <h1>Hello {firstName}</h1>
-         <button
-            onClick={toTarget}
-            name="/user/userInfo"
-         >
-            User Information
-         </button>
-         <button
-            onClick={toTarget}
-            name="/user/updatePage"
-         >
-            Update user information{" "}
-         </button>
-         <Outlet />
-      </div>
-   );
+    return (
+        <div>
+            <h1>Hello {firstName}</h1>
+            <button onClick={toTarget} name="/user/userInfo">User Information</button>
+            <button onClick={toTarget} name="/user/updatePage">Update user information </button>
+            <button onClick={logOut} >Logout</button>
+            <Outlet />
+        </div>
+    );
 }
 
 export default HomePage;
