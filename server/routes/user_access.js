@@ -26,26 +26,7 @@ function createExpDate() {
 
 router.post("/login", function (req, res, next) {
    if (!req.body || !req.body.username || !req.body.password) {
-      if (!req.body.cookie) {
-         return res.status(400).send({ message: "Missing one or more values", logged: false });
-      }
-      return database
-         .select("user_access", ["cookie_exp_date", "user_id"], { cookie: req.body.cookie })
-         .then((result) => {
-            if (!result || result.length === 0) {
-               return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
-            }
-            let time = result[0].cookie_exp_date;
-            if (time.getTime() < new Date().getTime()) {
-               return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
-            }
-            return res.status(200).send({
-               message: "Logged in successfuly",
-               logged: true,
-               id: result.user_id,
-            });
-         })
-         .catch((err) => res.status(400).send({ message: "somthing went wrong...", error: err, signed: false }));
+      return res.status(400).send({ message: "Missing one or more values", logged: false });
    }
    database
       .select("user_access", undefined, { ...req.body })
@@ -53,21 +34,47 @@ router.post("/login", function (req, res, next) {
          if (result.length === 0) {
             return res.status(400).send({ message: "Invalid data!", logged: false });
          } else {
+            let expDate = createExpDate();
             result = result[0];
             if (result.cookie_exp_date.getTime() < new Date().getTime()) {
-               database.update("user_access", ["cookie_exp_date"], [createExpDate()], { user_id: result.user_id });
+               database.update("user_access", ["cookie_exp_date"], [expDate], { user_id: result.user_id });
             }
             return res.status(200).send({
                message: "Logged in successfuly",
                logged: true,
                id: result.user_id,
                cookie: result.cookie,
+               expDate,
             });
          }
       })
       .catch((err) => {
          throw err;
       });
+});
+
+router.get("/login", function (req, res, next) {
+   const cookie = req.cookies;
+   console.log(cookie);
+   res.send("hi");
+   return;
+   return database
+      .select("user_access", ["cookie_exp_date", "user_id"], { cookie })
+      .then((result) => {
+         if (!result || result.length === 0) {
+            return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
+         }
+         let time = result[0].cookie_exp_date;
+         if (time.getTime() < new Date().getTime()) {
+            return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
+         }
+         return res.status(200).send({
+            message: "Logged in successfuly",
+            logged: true,
+            id: result.user_id,
+         });
+      })
+      .catch((err) => res.status(400).send({ message: "somthing went wrong...", error: err, signed: false }));
 });
 
 router.post("/register", (req, res, next) => {
@@ -102,6 +109,8 @@ router.post("/register", (req, res, next) => {
                      message: "signed up successfuly",
                      signed: true,
                      cookie,
+                     expDate: user_access.cookie_exp_date,
+                     userId: insertId,
                   });
                })
                .catch((err) => {

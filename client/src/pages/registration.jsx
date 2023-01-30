@@ -4,6 +4,10 @@ import serverAdress, { serverKey } from "../serverAdress";
 import { AES } from "crypto-js";
 import { UserContext } from "../App"
 
+function setCookie(name, value, expirationDate) {
+   document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/;`;
+}
+
 function Registration() {
     const navigate = useNavigate();
     const { userContext ,setNewUserContext } = useContext(UserContext)
@@ -50,7 +54,7 @@ function Registration() {
         res = await res.json();
         if (res.signed) {
             const encrypted = AES.encrypt(res.cookie, serverKey).toString();
-            document.cookie = encrypted;
+            setCookie("mainCookie", encrypted, new Date(res.expDate));
             // setNewUserContext(res.id, res.signed);
             navigate("/home");
         }
