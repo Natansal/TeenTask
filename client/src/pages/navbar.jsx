@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { UserContext } from "../App";
 
 function Navbar() {
-   const { logOut } = useContext(UserContext);
+   const { logOut, userContext } = useContext(UserContext);
    return (
       <nav>
          <ul>
@@ -16,12 +16,16 @@ function Navbar() {
             <li>
                <NavLink to="/user/updateBankInfo">Bank details update Page</NavLink>
             </li>
-            <li>
-               <NavLink to="/user/createJobPage">Create a new Job</NavLink>
-            </li>
-            <li>
-               <NavLink to="/user/jobs">See all available jobs</NavLink>
-            </li>
+            {userContext.user_type === 1 && (
+               <li>
+                  <NavLink to="/user/createJobPage">Create a new Job</NavLink>
+               </li>
+            )}
+            {userContext.user_type === 0 && (
+               <li>
+                  <NavLink to="/user/jobs">See all available jobs</NavLink>
+               </li>
+            )}
             <li>
                <a
                   href="#"
