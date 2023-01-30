@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import serverAdress, { serverKey } from "../serverAdress";
-import { AES } from "crypto-js";import { setNewUserContext, UserContext } from "../App"
+import { AES } from "crypto-js";
+import { UserContext } from "../App"
 
 
 function Login() {
-   const { setNewUserContext } = useContext(UserContext)
+   const { userContext ,setNewUserContext } = useContext(UserContext)
    const navigate = useNavigate();
    const [values, setValues] = useState({
       username: "",
@@ -34,9 +35,10 @@ function Login() {
          setNewUserContext(res.id, res.logged);
          const encrypted = AES.encrypt(res.cookie, serverKey).toString();
          document.cookie = encrypted;
-         navigate('/home');
+         navigate("/home");
       }
    }
+   
    function toRegstration() {
       navigate("/registration");
    }

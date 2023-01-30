@@ -1,9 +1,7 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import React, { useState, useEffect, createContext, Children } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, createContext } from "react";
 import Login from "./pages/login";
 import Registration from "./pages/registration";
-import serverAdress, { serverKey } from "./serverAdress";
-import { AES, enc } from "crypto-js";
 import HomePage from "./pages/home";
 
 
@@ -14,12 +12,14 @@ function UserContextProvider({ children }) {
 
    const setNewUserContext = (user_id, displayType) => {
       return setUserContext((prev) => {
+         console.log(userContext);
          return {
             ...prev,
             userId: user_id, display: displayType
          }
       })
    }
+
    return (
       <UserContext.Provider value={{ userContext, setNewUserContext }}>
          {children}
