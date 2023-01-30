@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import serverAdress from "../serverAdress";
-
+import serverAdress, { serverKey } from "../serverAdress";
+import { AES } from "crypto-js";
 
 function Login() {
-   const navigate = useNavigate()
+   const navigate = useNavigate();
    const [values, setValues] = useState({
       username: "",
       password: "",
@@ -28,9 +28,13 @@ function Login() {
       });
       res = await res.json();
       alert(res.message);
+      if (res.logged) {
+         const encrypted = AES.encrypt(res.cookie, serverKey).toString();
+         document.cookie = encrypted;
+      }
    }
    function toRegstration() {
-      navigate('/registration')
+      navigate("/registration");
    }
 
    return (

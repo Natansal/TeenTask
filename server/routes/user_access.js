@@ -29,14 +29,14 @@ router.post("/login", function (req, res, next) {
       if (!req.body.cookie) {
          return res.status(400).send({ message: "Missing one or more values", logged: false });
       }
-      database
+      return database
          .select("user_access", ["cookie_exp_date", "user_id"], { cookie: req.body.cookie })
          .then((result) => {
             if (!result || result.length === 0) {
                return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
             }
             let time = result[0].cookie_exp_date;
-            if (new Date(time).getTime() < new Date().getTime()) {
+            if (time.getTime() < new Date().getTime()) {
                return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
             }
             return res.status(200).send({
@@ -98,7 +98,11 @@ router.post("/register", (req, res, next) => {
             database
                .insert("user", params, values)
                .then((result) => {
-                  res.status(200).send({ message: "signed up successfuly", signed: true });
+                  res.status(200).send({
+                     message: "signed up successfuly",
+                     signed: true,
+                     cookie,
+                  });
                })
                .catch((err) => {
                   res.status(400).send({ message: "somthing went wrong...", error: err, signed: false });
