@@ -67,6 +67,7 @@ function App() {
             navigate("/user");
          });
    }, []);
+   
    return (
       <UserContext.Provider value={{ userContext, setNewUserContext }}>
          <Routes>

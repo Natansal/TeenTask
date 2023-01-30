@@ -68,7 +68,7 @@ router.get("/login", function (req, res, next) {
          return res.status(200).send({
             message: "Logged in successfuly",
             logged: true,
-            id: result.user_id,
+            id: result[0].user_id,
          });
       })
       .catch((err) => res.status(400).send({ message: "somthing went wrong...", error: err, signed: false }));
