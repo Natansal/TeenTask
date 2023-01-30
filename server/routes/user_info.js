@@ -39,6 +39,15 @@ router.put("/:userId", function (req, res) {
             .update("user", cols, values, { user_id: userId })
             .then((response = res.status(200).send({ message: "Updated successfully" })))
             .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
+         if (req.body.user_type) {
+            if (req.body.user_type == 1) {
+               //if he was an employee
+               database.delete("employee_history", { user_id: userId });
+            } else {
+               //if he was an employer
+               database.delete("job", { user_id: userId });
+            }
+         }
       })
       .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
 });
