@@ -5,11 +5,11 @@ import serverAdress from "../serverAdress";
 
 function HomePage() {
    const navigate = useNavigate();
-   const { userContext } = useContext(UserContext);
+   const { userContext, logOut } = useContext(UserContext);
    const [firstName, setFirstName] = useState();
    const getName = async () => {
       if (!userContext.userId) {
-         return logOut();
+         return navigate("/login");
       }
       const res = await fetch(`${serverAdress}/users/${userContext.userId}/first_name`, {
          method: "GET",
@@ -30,15 +30,25 @@ function HomePage() {
       return <h1>Loading...</h1>;
    }
 
-    return (
-        <div>
-            <h1>Hello {firstName}</h1>
-            <button onClick={toTarget} name="/user/userInfo">User Information</button>
-            <button onClick={toTarget} name="/user/updatePage">Update user information </button>
-            <button onClick={logOut} >Logout</button>
-            <Outlet />
-        </div>
-    );
+   return (
+      <div>
+         <h1>Hello {firstName}</h1>
+         <button
+            onClick={toTarget}
+            name="/user/userInfo"
+         >
+            User Information
+         </button>
+         <button
+            onClick={toTarget}
+            name="/user/updatePage"
+         >
+            Update user information{" "}
+         </button>
+         <button onClick={logOut}>Logout</button>
+         <Outlet />
+      </div>
+   );
 }
 
 export default HomePage;
