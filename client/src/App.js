@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
 
+function isMobilePhone() {
+   return window.innerWidth <= 720;
+}
+
 function getCookie(name) {
    const value = `; ${document.cookie}`;
    const parts = value.split(`; ${name}=`);
@@ -18,8 +22,21 @@ function getCookie(name) {
    }
 }
 
+function clearAllCookies() {
+   const cookies = document.cookie.split(";");
+
+   for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+   }
+}
+
+
 function App() {
    const [userContext, setUserContext] = useState({});
+   const navigate = useNavigate();
 
    const setNewUserContext = (user_id, displayType) => {
       return setUserContext((prev) => {
@@ -30,9 +47,7 @@ function App() {
             display: displayType,
          };
       });
-   };
-
-   const navigate = useNavigate();
+   }
    useEffect(() => {
       let cookie = getCookie("mainCookie");
       if (document.cookie === "" || !cookie) {
@@ -48,7 +63,7 @@ function App() {
                alert(res.message);
                return navigate("/login");
             }
-            setNewUserContext(res.id, true)
+            setNewUserContext(res.id, isMobilePhone());
             navigate("/user");
          });
    }, []);
