@@ -36,7 +36,7 @@ router.put("/:userId", function (req, res) {
             return res.status(400).send({ message: "Password Incorrect", error: err });
          }
          database
-            .update("user", cols, values, { userId })
+            .update("user", cols, values, { user_id: userId })
             .then((response = res.status(200).send({ message: "Updated successfully" })))
             .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
       })
