@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import "../styles/loader.css";
 
 function Loading() {
-   const []
+   const [loading, setLoading] = useState(true);
+   useEffect(() => {
+      setTimeout(() => {
+         setLoading((prev) => false);
+      }, 5000);
+      setTimeout(() => {
+         window.location.reload();
+      }, 10000);
+   }, []);
    return (
       <div id="loaderPage">
          <div className="pencil">
@@ -13,7 +21,7 @@ function Loading() {
             <div className="pencil__eraser"></div>
          </div>
          <div className="line"></div>
-         <h2>Page Loading...Please Wait</h2>
+         <h2> {loading ? "Page Loading...Please Wait" : "Connection error...."}</h2>
       </div>
    );
 }

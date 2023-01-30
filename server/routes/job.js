@@ -56,8 +56,9 @@ router.post("/", async function (req, res, next) {
       values.push(req.body[key]);
    }
    try {
-      let id = await database.insert("job", cols, values).insertId;
-      return res.status(200).send({ message: "added successfuly", job_id: id });
+      let id = await database.insert("job", cols, values);
+      console.log(id);
+      return res.status(200).send({ message: "added successfuly", job_id: id.insertId });
    } catch (err) {
       return res.status(400).send({ message: "Something went wrong...", error: err });
    }
