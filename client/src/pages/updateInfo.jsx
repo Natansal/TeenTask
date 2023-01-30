@@ -56,7 +56,7 @@ function UpdatePage() {
         res = await res.json();
         if (res.updated) {
             alert(res.message)
-            // setNewUserContext(res.id, res.logged, res.user_type);
+            setNewUserContext(res.user_id, user_info.user_type);
             navigate("/user/userInfo");
         } else {
             alert(res.message);

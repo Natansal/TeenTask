@@ -88,7 +88,7 @@ function App() {
                element={
                   <Navigate
                      replace
-                     to="/login"
+                     to={userContext.userId ? "/login" : "/user"}
                   />
                }
             />
