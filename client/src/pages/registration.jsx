@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import serverAdress, { serverKey } from "../serverAdress";
-import { AES } from "crypto-js";
+import serverAdress from "../serverAdress";
 import { UserContext } from "../App";
 
 function setCookie(name, value, expirationDate) {
@@ -44,22 +43,21 @@ function Registration() {
       });
    }
 
-    async function onSubmit(e) {
-        e.preventDefault();
-        let res = await fetch(`${serverAdress}/user_access/register`, {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ user_access: user_access, user_info: user_info }),
-        });
-        res = await res.json();
-        if (res.signed) {
-            const encrypted = AES.encrypt(res.cookie, serverKey).toString();
-            setCookie("mainCookie", encrypted, new Date(res.expDate));
-            setNewUserContext(res.userId, res.signed);
-            navigate("/home");
-        }
-        alert(res.message);
-    }
+   async function onSubmit(e) {
+      e.preventDefault();
+      let res = await fetch(`${serverAdress}/user_access/register`, {
+         method: "POST",
+         headers: { "Content-type": "application/json" },
+         body: JSON.stringify({ user_access: user_access, user_info: user_info }),
+      });
+      res = await res.json();
+      if (res.signed) {
+         setCookie("mainCookie", res.cookie, new Date(res.expDate));
+         setNewUserContext(res.userId, res.signed);
+         navigate("/home");
+      }
+      alert(res.message);
+   }
 
    function tologIn() {
       navigate("/login");

@@ -3,8 +3,7 @@ import React, { useState, createContext, useEffect } from "react";
 import Login from "./pages/login";
 import Registration from "./pages/registration";
 import HomePage from "./pages/home";
-import { AES, enc } from "crypto-js";
-import serverAdress, { serverKey } from "./serverAdress";
+import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
@@ -14,7 +13,6 @@ function getCookie(name) {
    const parts = value.split(`; ${name}=`);
    if (parts.length === 2) {
       let cookie = parts.pop().split(";").shift();
-      cookie = AES.decrypt(cookie, serverKey).toString(enc.Utf8);
       return cookie;
    }
 }
