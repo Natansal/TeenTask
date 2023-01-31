@@ -4,20 +4,20 @@ import serverAdress from "../serverAdress";
 import { UserContext } from "../App";
 
 function UpdatePage() {
-    const navigate = useNavigate();
-    const { userContext, setNewUserContext } = useContext(UserContext);
-    const [user_info, setUserInfo] = useState({
-        first_name: "",
-        last_name: "",
-        user_type: 0,
-        email: "",
-        phone_number: "",
-        birth_date: "",
-        city: "",
-        state: "",
-        citizen_num: ""
-    });
-    const [password, setPassword] = useState("");
+   const navigate = useNavigate();
+   const { userContext, setNewUserContext } = useContext(UserContext);
+   const [user_info, setUserInfo] = useState({
+      first_name: "",
+      last_name: "",
+      user_type: 0,
+      email: "",
+      phone_number: "",
+      birth_date: "",
+      city: "",
+      state: "",
+      citizen_num: "",
+   });
+   const [password, setPassword] = useState("");
 
    function onChange(e) {
       if (e.target.name === "password") {
@@ -31,38 +31,42 @@ function UpdatePage() {
       });
    }
 
-    async function onSubmit(e) {
-        e.preventDefault();
-        let obj = { ...user_info };
-        for (let key in obj) {
-            if (obj[key] === "") {
-                delete obj[key];
-            }
-        }
-        const regex = /^[0-9]{9}$/;
-        const { phone_number, citizen_num } = user_info;
-        console.log(regex.test(phone_number));
-        if(phone_number.length > 0 || citizen_num.length > 0) {
-            if (!regex.test(phone_number) || !regex.test(citizen_num)) {
-                return alert("Your phone number or citizen number are invalid, please try again.");
-            }
-        }
-        
-        let res = await fetch(`${serverAdress}/users/${userContext.userId}`, {
-            method: "PUT",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ password, user_info: obj }),
-        });
-        res = await res.json();
-        if (res.updated) {
-            alert(res.message)
-            setNewUserContext(res.user_id, user_info.user_type);
-            navigate("/user/userInfo");
-        } else {
-            alert(res.message);
+   async function onSubmit(e) {
+      e.preventDefault();
+      let obj = { ...user_info };
+      for (let key in obj) {
+         if (obj[key] === "") {
+            delete obj[key];
+         }
+      }
+      const regex = /^[0-9]{9}$/;
+      const { phone_number, citizen_num } = user_info;
+      console.log(regex.test(phone_number));
+      if (phone_number.length > 0 || citizen_num.length > 0) {
+         if (!regex.test(phone_number) || !regex.test(citizen_num)) {
+            return alert("Your phone number or citizen number are invalid, please try again.");
+         }
+      }
 
-        }
-    }
+      let res = await fetch(`${serverAdress}/users/${userContext.userId}`, {
+         method: "PUT",
+         headers: { "Content-type": "application/json" },
+         body: JSON.stringify({ password, user_info: obj }),
+      });
+      res = await res.json();
+      if (res.updated) {
+         alert(res.message);
+         setNewUserContext(
+            res.user_id,
+            user_info.user_type,
+            user_info.city !== "" ? user_info.city : undefined,
+            user_info.state !== "" ? user_info.state : undefined,
+         );
+         navigate("/user/userInfo");
+      } else {
+         alert(res.message);
+      }
+   }
 
    return (
       <div className="updatePage">

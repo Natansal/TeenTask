@@ -35,7 +35,7 @@ router.post("/login", function (req, res, next) {
          "user_id",
          "user_id",
          ["user_id", "username", "password", "cookie", "cookie_exp_date"],
-         ["user_type"],
+         ["user_type", "state", "city"],
          { ...req.body },
       )
       .then((result) => {
@@ -55,6 +55,8 @@ router.post("/login", function (req, res, next) {
                cookie: result.cookie,
                expDate,
                user_type: result.user_type,
+               state: result.state,
+               city: result.city,
             });
          }
       })
@@ -72,7 +74,7 @@ router.get("/login", function (req, res, next) {
          "user_id",
          "user_id",
          ["user_id", "username", "password", "cookie", "cookie_exp_date"],
-         ["user_type"],
+         ["user_type", "state", "city"],
          { cookie },
       )
       .then((result) => {
@@ -83,11 +85,14 @@ router.get("/login", function (req, res, next) {
          if (time.getTime() < new Date().getTime()) {
             return res.status(400).send({ message: "Cookie invalid! please log in", logged: false });
          }
+         console.log(result[0]);
          return res.status(200).send({
             message: "Logged in successfuly",
             logged: true,
             id: result[0].user_id,
             user_type: result[0].user_type,
+            city: result[0].city,
+            state: result[0].state,
          });
       })
       .catch((err) => res.status(400).send({ message: "somthing went wrong...", error: err, signed: false }));
@@ -128,6 +133,8 @@ router.post("/register", (req, res, next) => {
                      expDate: user_access.cookie_exp_date,
                      userId: insertId,
                      user_type: user_info.user_type,
+                     state: user_info.state,
+                     city: user_info.city,
                   });
                })
                .catch((err) => {
