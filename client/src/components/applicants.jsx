@@ -1,8 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import serverAdress from "../serverAdress";
 import Reviews from "./reviews";
+import { UserContext } from "../App";
+import ReviewForm from "./reviewForm";
+
 function Applicants(props) {
    const [reviewsVis, setReviewsVis] = useState(false);
+   const { myAlert } = useContext(UserContext);
+   const [revFormVis, setRevFormVis] = useState(false);
+   function openReviewForm(e) {
+      setRevFormVis((prev) => !prev);
+   }
    function accept(e) {
       fetch(`${serverAdress}/jobs/${props.job_id}/${props.eh_id}`, {
          method: "PUT",
@@ -67,7 +75,9 @@ function Applicants(props) {
                <button onClick={reject}>Reject</button>
             </>
          )}
+         {props.accepted == 1 && props.done == 1 && <button onClick={openReviewForm}>Write feedback</button>}
          {reviewsVis && <Reviews user_id={props.user_id} />}
+         {revFormVis && <ReviewForm target_id={props.user_id} />}
       </div>
    );
 }

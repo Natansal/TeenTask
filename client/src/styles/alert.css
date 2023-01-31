@@ -1,13 +1,13 @@
 .alert {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 40vh;
+    left: 25vw;
     padding: 20px;
     background-color: #f2dede;
     color: #a94442;
     text-align: center;
     border-radius: 5px;
+    width: 50vw;
 }
 
 .alert h1 {

@@ -30,7 +30,7 @@ function Job(props) {
       accepted,
    } = props;
 
-   const showApplicantsBtn = (bool) => {
+   const showApplicantsClick = (bool) => {
       fetch(`${serverAdress}/jobs/${job_id}`, {
          method: "GET",
          credentials: "include",
@@ -52,6 +52,7 @@ function Job(props) {
          .then((res) => res.json())
          .then((res) => {
             myAlert(res.message);
+            showApplicantsClick(true);
          });
    }
 
@@ -61,6 +62,18 @@ function Job(props) {
       })
          .then((res) => res.json())
          .then((res) => myAlert(res.message));
+   }
+
+   function setDone(e) {
+      fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
+         method: "PUT",
+         headers: { "Content-type": "application/json" },
+         body: JSON.stringify({ done: 1 }),
+      })
+         .then((res) => res.json())
+         .then((res) => {
+            myAlert(res.message);
+         });
    }
    return (
       <div className="job">
@@ -76,8 +89,9 @@ function Job(props) {
          {appliedTo !== undefined && accepted == 1 && <h2>Done: {done === 0 ? "Not yet" : "Yes"}</h2>}
          {userContext.user_type != 0 && (
             <>
-               <button onClick={showApplicantsBtn}>See all applicants </button>
+               <button onClick={showApplicantsClick}>See all applicants </button>
                {accepted == 0 && <button onClick={deleteJob}>Delete job</button>}
+               {accepted == 1 && done == 0 && <button onClick={setDone}>Set job completed</button>}
             </>
          )}
          {appliedTo !== undefined && accepted == 1 && done == 1 && <h2>Paid: {paid === 0 ? "Not yet" : "Yes"}</h2>}
@@ -92,7 +106,7 @@ function Job(props) {
                <Applicants
                   key={index}
                   {...applicant}
-                  handleReject={showApplicantsBtn}
+                  handleReject={showApplicantsClick}
                />
             ))}
       </div>
