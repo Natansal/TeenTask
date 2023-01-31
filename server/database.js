@@ -134,7 +134,8 @@ class Database {
          FROM ${table1}\
          JOIN ${table2}\
          ON ${table1}.${join1}=${table2}.${join2}\
-         JOIN ${table2}.${join3}=${table3}.${join4}\
+         JOIN ${table3}\
+         ON ${table2}.${join3}=${table3}.${join4}\
          ${this.createQueryFromRequest(queryObj)}`;
          this.con.query(sql, (err, res) => {
             if (err) {
