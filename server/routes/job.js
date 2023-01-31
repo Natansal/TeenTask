@@ -107,9 +107,9 @@ router.post("/:job_id", async function (req, res, next) {
    obj.done = obj.done ? obj.done : 0;
    let cols = [];
    let values = [];
-   for (let key in req.body) {
+   for (let key in obj) {
       cols.push(key);
-      values.push(req.body[key]);
+      values.push(obj[key]);
    }
    try {
       let id = await database.insert("employee_history", cols, values).insertId;

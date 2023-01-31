@@ -30,9 +30,10 @@ function Jobs() {
       fetch(`${serverAdress}/jobs/${job_id}`, {
          method: "POST",
          headers: { "Content-type": "application/json" },
-         body: JSON.stringify({}),
-      });
-      alert("Applied successfuly");
+         body: JSON.stringify({
+            user_id: userContext.userId,
+         }),
+      }).then((res) => alert("Applied successfuly"));
    }
    return (
       <div>
