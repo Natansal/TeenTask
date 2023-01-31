@@ -59,9 +59,9 @@ router.get("/:job_id", async function (req, res, next) {
             "user_id",
             "job_id",
             "job_id",
-            ["first_name", "last_name"],//employee data
-            ["paid", "done", "user_id", "accepted"],//appliment data
-            ["job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],//job data
+            ["first_name", "last_name"], //employee data
+            ["paid", "done", "user_id", "accepted"], //appliment data
+            ["job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"], //job data
             undefined,
             undefined,
             queryObj,
@@ -79,9 +79,9 @@ router.get("/:job_id", async function (req, res, next) {
          "user_id",
          "job_id",
          "job_id",
-         ["first_name", "last_name"],
+         ["first_name", "last_name", "state", "city"],
          ["user_id", "job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
-         ["paid", "done", "accepted"],
+         ["eh_id", "paid", "done", "accepted"],
          undefined,
          undefined,
          queryObj,
@@ -169,7 +169,7 @@ router.delete("/:job_id", async function (req, res, next) {
 router.delete("/:job_id/:eh_id", async function (req, res, next) {
    const { job_id, eh_id } = req.params;
    try {
-      await database.delete("employee_id", { job_id, eh_id });
+      await database.delete("employee_history", { job_id, eh_id });
       res.status(200).send({ message: "deleted successfuly!" });
    } catch (err) {
       return res.status(400).send({ message: "Something went wrong...", error: err });

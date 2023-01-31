@@ -23,14 +23,19 @@ function Job(props) {
       state,
       handleClick,
       job_id,
+      appliedTo,
+      eh_id,
+      paid,
+      done,
+      accepted,
    } = props;
 
    const showApplicantsBtn = (e) => {
       let applicantsMap = [];
       // if (applicants.length === 0) {
       fetch(`${serverAdress}/jobs/${job_id}`, {
-         method: 'GET',
-         credentials: "include"
+         method: "GET",
+         credentials: "include",
       })
          .then(response => response.json())
          .then(response => {
@@ -40,14 +45,9 @@ function Job(props) {
             setApplicants(applicantsMap);
             setShowApplicants(prev => prev ? false : true);
          });
-      // } else {
-      // setShowApplicants(prev => prev ? false : true)
-      // }
-
    }
-   // useEffect({
 
-   // }, [])
+   function markPaid() { }
    return (
       <div className="job">
          {userContext.user_type != 1 && (
@@ -60,15 +60,19 @@ function Job(props) {
          <h2>End date: {new Date(end_date).toLocaleString()}</h2>
          <h2>Payment type: {payment_type}</h2>
          <h2>Loaction: {`${city}, ${state}`}</h2>
-         {userContext.user_type != 0 && (
-            <h2>Job proccess: Pending/Done </h2>
-         )}
+         {appliedTo && <h2>Status: {accepted === 0 ? "Pending" : "Accepted"}</h2>}
+         {appliedTo && accepted == 1 && <h2>Done: {done === 0 ? "Not yet" : "Yes"}</h2>}
          {userContext.user_type != 0 && (
             <button onClick={showApplicantsBtn}>See all applicants </button>
          )}
          {showApplicants ? applicants.map((applicant) => <Applicants key={Math.random() * 1000} firstName={applicant.firstName} lastName={applicant.lastName} />) : null}
+         {appliedTo && accepted == 1 && done == 1 && <h2>Paid: {paid === 0 ? "Not yet" : "Yes"}</h2>}
+         {userContext.user_type != 0 && <h2>Job proccess: Pending/Done </h2>}
+         {appliedTo && accepted == 1 && done == 1 && <button onClick={markPaid}>Mark as paid </button>}
          {userContext.user_type != 1 && (
-            <button onClick={() => handleClick(job_id)}>Apply to this job</button>
+            <button onClick={() => handleClick(job_id, eh_id)}>
+               {appliedTo ? "Delete appliment to this job" : "Apply to this job"}
+            </button>
          )}
       </div>
    );

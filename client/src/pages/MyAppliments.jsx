@@ -8,7 +8,7 @@ function MyAppliments() {
    const { userContext } = useContext(UserContext);
    const [appliments, setAppliments] = useState();
    useEffect(() => {
-      fetch(`${serverAdress}/jobs/*?user_id=${userContext.user_id}`, {
+      fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}`, {
          method: "GET",
          credentials: "include",
       })
@@ -19,10 +19,32 @@ function MyAppliments() {
    if (!appliments) {
       return <Loading />;
    }
-
-   return <div className="applimentsPage">
-    {/* {appliments.map((job => ))} */}
-   </div>;
+   function handleDelete(job_id, eh_id) {
+      fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
+         method: "DELETE",
+      })
+         .then((res) => res.json())
+         .then((res) => {
+            alert(res.message);
+            setAppliments((prev) => {
+               let arr = [...prev];
+               let index = arr.findIndex((val) => val.eh_id == eh_id);
+               arr.splice(index, 1);
+               return arr;
+            });
+         });
+   }
+   return (
+      <div className="applimentsPage">
+         {appliments.map((job) => (
+            <Job
+               {...job}
+               appliedTo={true}
+               handleClick={handleDelete}
+            />
+         ))}
+      </div>
+   );
 }
 
 export default MyAppliments;
