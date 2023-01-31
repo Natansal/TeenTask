@@ -34,12 +34,6 @@ function Job(props) {
       })
          .then((response) => response.json())
          .then((response) => console.log("res", response));
-      // const createObjects = (firstNames, lastName) => {
-      //    return firstNames.map((firstName) => ({
-      //      first_name: firstName,
-      //      last_name: lastName,
-      //    }));
-      //  };
    };
    function markPaid() {
       fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
@@ -78,3 +72,16 @@ function Job(props) {
 }
 
 export default Job;
+
+
+// function markPaid() {
+//    fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
+//       method: "PUT",
+//       headers: { "Content-type": "application/json" },
+//       body: JSON.stringify({ paid: 1 }),
+//    })
+//       .then((res) => res.json())
+//       .then((res) => {
+//          alert(res.message);
+//       });
+// }
