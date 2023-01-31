@@ -3,7 +3,7 @@ import serverAdress from "../serverAdress";
 import { UserContext } from "../App";
 
 function ReviewForm({ target_id }) {
-   const { userContext } = useContext(UserContext);
+   const { userContext, myAlert } = useContext(UserContext);
    const [review, setReview] = useState({
       body: "",
       stars: "",
@@ -25,7 +25,7 @@ function ReviewForm({ target_id }) {
          body: JSON.stringify({ ...review, user_id: userContext.userId, target_id }),
       });
       res = await res.json();
-      alert(res.message);
+      myAlert(res.message);
    }
 
    return (

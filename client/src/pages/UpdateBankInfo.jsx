@@ -14,7 +14,7 @@ function UpdateBankInfo() {
    });
    const [password, setPassword] = useState("");
    const [errors, setErrors] = useState({});
-   const { userContext } = useContext(UserContext);
+   const { userContext, myAlert } = useContext(UserContext);
 
    const validate = () => {
       let newErrors = {};
@@ -70,7 +70,7 @@ function UpdateBankInfo() {
             body: JSON.stringify({ user_info: obj, password }),
          })
             .then((res) => res.json())
-            .then((res) => alert(res.message))
+            .then((res) => myAlert(res.message))
             .then((res) => navigate("/user/updateBankInfo"));
       }
       setErrors(errors);

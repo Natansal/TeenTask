@@ -5,7 +5,7 @@ import { UserContext } from "../App";
 
 function UpdatePage() {
    const navigate = useNavigate();
-   const { userContext, setNewUserContext } = useContext(UserContext);
+   const { userContext, setNewUserContext, myAlert } = useContext(UserContext);
    const [user_info, setUserInfo] = useState({
       first_name: "",
       last_name: "",
@@ -44,7 +44,7 @@ function UpdatePage() {
       console.log(regex.test(phone_number));
       if (phone_number.length > 0 || citizen_num.length > 0) {
          if (!regex.test(phone_number) || !regex.test(citizen_num)) {
-            return alert("Your phone number or citizen number are invalid, please try again.");
+            return myAlert("Your phone number or citizen number are invalid, please try again.");
          }
       }
 
@@ -55,7 +55,7 @@ function UpdatePage() {
       });
       res = await res.json();
       if (res.updated) {
-         alert(res.message);
+         myAlert(res.message);
          setNewUserContext(
             res.user_id,
             user_info.user_type,
@@ -64,7 +64,7 @@ function UpdatePage() {
          );
          navigate("/user/userInfo");
       } else {
-         alert(res.message);
+         myAlert(res.message);
       }
    }
 

@@ -8,7 +8,7 @@ function setCookie(name, value, expirationDate) {
 }
 
 function Login() {
-   const { userContext, setNewUserContext, logOut } = useContext(UserContext);
+   const { userContext, setNewUserContext, logOut, myAlert } = useContext(UserContext);
    const navigate = useNavigate();
    const [values, setValues] = useState({
       username: "",
@@ -39,12 +39,12 @@ function Login() {
       });
       res = await res.json();
       if (res.logged) {
-         // alert(res.message);
+         // myAlert(res.message);
          setNewUserContext(res.id, res.user_type, res.city, res.state);
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
          navigate("/user");
       } else {
-         alert(res.message);
+         myAlert(res.message);
       }
    }
 

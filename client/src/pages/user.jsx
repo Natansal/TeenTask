@@ -7,7 +7,7 @@ import Loading from "./Loader";
 
 function HomePage() {
    const navigate = useNavigate();
-   const { userContext, logOut } = useContext(UserContext);
+   const { userContext, logOut, myAlert } = useContext(UserContext);
    const [firstName, setFirstName] = useState();
    const getName = async () => {
       if (!userContext.userId) {

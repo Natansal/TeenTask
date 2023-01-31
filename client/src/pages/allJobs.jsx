@@ -6,8 +6,8 @@ import Job from "../components/job";
 
 function Jobs() {
    const [jobs, setJobs] = useState();
-   const { userContext } = useContext(UserContext);
-   
+   const { userContext, myAlert } = useContext(UserContext);
+
    useEffect(() => {
       fetch(`${serverAdress}/jobs?available=1&state=${userContext.state}`, {
          method: "GET",
@@ -36,7 +36,7 @@ function Jobs() {
          }),
       })
          .then((res) => res.json())
-         .then((res) => alert(res.message));
+         .then((res) => myAlert(res.message));
    }
    return (
       <div>

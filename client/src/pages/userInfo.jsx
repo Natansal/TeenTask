@@ -6,7 +6,7 @@ import Loading from "./Loader";
 
 function UserInfo() {
     const navigate = useNavigate();
-    const { userContext } = useContext(UserContext);
+    const { userContext, myAlert } = useContext(UserContext);
     const [userInfo, setUserInfo] = useState();
     const getInfo = async () => {
         const res = await fetch(`${serverAdress}/users/${userContext.userId}/*`, {

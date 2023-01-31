@@ -6,7 +6,7 @@ import serverAdress from "../serverAdress";
 
 function CreateJob() {
    const navigate = useNavigate();
-   const { userContext } = useContext(UserContext);
+   const { userContext, myAlert } = useContext(UserContext);
    const [errors, setErrors] = useState({});
    const start_date = useRef();
    const end_date = useRef();
@@ -93,7 +93,7 @@ function CreateJob() {
             body: JSON.stringify({ user_id: userContext.userId, ...formData }),
          })
             .then((res) => res.json())
-            .then((answer) => alert(answer.message));
+            .then((answer) => myAlert(answer.message));
       }
    };
 

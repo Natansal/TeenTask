@@ -9,7 +9,7 @@ function setCookie(name, value, expirationDate) {
 
 function Registration() {
    const navigate = useNavigate();
-   const { userContext, setNewUserContext } = useContext(UserContext);
+   const { userContext, setNewUserContext, myAlert } = useContext(UserContext);
    const [user_info, setUserInfo] = useState({
       first_name: "",
       last_name: "",
@@ -49,7 +49,7 @@ function Registration() {
       const { phone_number, citizen_num } = user_info;
       console.log(regex.test(phone_number));
       if (!regex.test(phone_number) || !regex.test(citizen_num)) {
-         return alert("Your phone number or citizen number are invalid, please try again.");
+         return myAlert("Your phone number or citizen number are invalid, please try again.");
       }
       let res = await fetch(`${serverAdress}/user_access/register`, {
          method: "POST",
@@ -62,7 +62,7 @@ function Registration() {
          setNewUserContext(res.userId, res.user_type, res.city, res.state);
          navigate("/user");
       }
-      alert(res.message);
+      myAlert(res.message);
    }
 
    function tologIn() {

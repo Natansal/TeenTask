@@ -6,7 +6,7 @@ import Job from "../components/job";
 
 function EmployerJobs() {
    const [jobs, setJobs] = useState();
-   const { userContext } = useContext(UserContext);
+   const { userContext, myAlert } = useContext(UserContext);
    useEffect(() => {
       fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}`, {
          method: "GET",

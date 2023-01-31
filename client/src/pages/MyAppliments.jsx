@@ -5,7 +5,7 @@ import Loading from "./Loader";
 import Job from "../components/job";
 
 function MyAppliments() {
-   const { userContext } = useContext(UserContext);
+   const { userContext, myAlert } = useContext(UserContext);
    const [appliments, setAppliments] = useState();
    useEffect(() => {
       fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}`, {
@@ -25,7 +25,7 @@ function MyAppliments() {
       })
          .then((res) => res.json())
          .then((res) => {
-            alert(res.message);
+            myAlert(res.message);
             setAppliments((prev) => {
                let arr = [...prev];
                let index = arr.findIndex((val) => val.eh_id == eh_id);

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import UpdateBankInfo from "./pages/UpdateBankInfo";
 import Jobs from "./pages/allJobs";
 import MyAppliments from "./pages/MyAppliments";
+import Alert from "./components/Alert";
 
 export const UserContext = createContext();
 
@@ -41,6 +42,7 @@ function clearAllCookies() {
 
 function App() {
    const [userContext, setUserContext] = useState({});
+   const [message, setMessage] = useState();
    const navigate = useNavigate();
 
    const setNewUserContext = (
@@ -80,6 +82,12 @@ function App() {
          });
    }, []);
 
+   function myAlert(message) {
+      setMessage(message);
+   }
+   function hideAlert() {
+      setMessage(undefined);
+   }
    function logOut() {
       if (!window.confirm("Are you sure you want to log out?")) {
          return;
@@ -90,60 +98,66 @@ function App() {
    }
 
    return (
-      <UserContext.Provider value={{ userContext, setNewUserContext, logOut }}>
-         <Routes>
-            <Route
-               index
-               element={
-                  <Navigate
-                     replace
-                     to={userContext.userId ? "/login" : "/user"}
+      <>
+         <Alert
+            message={message}
+            handleClick={hideAlert}
+         />
+         <UserContext.Provider value={{ userContext, setNewUserContext, logOut, myAlert }}>
+            <Routes>
+               <Route
+                  index
+                  element={
+                     <Navigate
+                        replace
+                        to={userContext.userId ? "/login" : "/user"}
+                     />
+                  }
+               />
+               <Route
+                  path="/login"
+                  element={<Login />}
+               />
+               <Route
+                  path="/registration"
+                  element={<Registration />}
+               />
+               <Route
+                  path="/user"
+                  element={<HomePage />}
+               >
+                  <Route
+                     path="userInfo"
+                     element={<UserInfo />}
                   />
-               }
-            />
-            <Route
-               path="/login"
-               element={<Login />}
-            />
-            <Route
-               path="/registration"
-               element={<Registration />}
-            />
-            <Route
-               path="/user"
-               element={<HomePage />}
-            >
-               <Route
-                  path="userInfo"
-                  element={<UserInfo />}
-               />
-               <Route
-                  path="updatePage"
-                  element={<UpdatePage />}
-               />
-               <Route
-                  path="createJobPage"
-                  element={<CreateJob />}
-               />
-               <Route
-                  path="updateBankInfo"
-                  element={<UpdateBankInfo />}
-               />
-               <Route
-                  path="jobs"
-                  element={<Jobs />}
-               />
-               <Route
-                  path="employerJobs"
-                  element={<EmployerJobs />}
-               />
-               <Route
-                  path="myAppliments"
-                  element={<MyAppliments />}
-               />
-            </Route>
-         </Routes>
-      </UserContext.Provider>
+                  <Route
+                     path="updatePage"
+                     element={<UpdatePage />}
+                  />
+                  <Route
+                     path="createJobPage"
+                     element={<CreateJob />}
+                  />
+                  <Route
+                     path="updateBankInfo"
+                     element={<UpdateBankInfo />}
+                  />
+                  <Route
+                     path="jobs"
+                     element={<Jobs />}
+                  />
+                  <Route
+                     path="employerJobs"
+                     element={<EmployerJobs />}
+                  />
+                  <Route
+                     path="myAppliments"
+                     element={<MyAppliments />}
+                  />
+               </Route>
+            </Routes>
+         </UserContext.Provider>
+      </>
    );
 }
 

@@ -16,7 +16,7 @@ function Applicants(props) {
                headers: { "Content-type": "application/json" },
                body: JSON.stringify({ available: 0 }),
             }).then((res) => props.handleReject(true));
-            alert(res.message);
+            myAlert(res.message);
          });
       fetch(`${serverAdress}/jobs/${props.job_id}`, {
          method: "PUT",
@@ -30,7 +30,7 @@ function Applicants(props) {
       })
          .then((res) => res.json())
          .then((res) => {
-            alert(res.message);
+            myAlert(res.message);
             props.handleReject(true);
          });
    }
