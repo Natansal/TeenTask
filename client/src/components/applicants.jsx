@@ -8,10 +8,13 @@ function Applicants(props){
     function reject(e){
         return
     }
+    function showReview(e){
+        return
+    }
   return (
     <div>
-      <p>First Name: {props.firstName}</p>
-      <p>Last Name: {props.lastName}</p>
+      <p>Full Applicent Name: {props.firstName}{" "}{props.lastName}</p>
+      <button onClick={showReview}>See {props.firstName} review</button>
       <button onClick={accept}>Accept</button>
       <button onClick={reject}>Reject</button>
     </div>
