@@ -9,14 +9,30 @@ router.get("/", async function (req, res, next) {
       return res.status(400).send({ message: "unknown user" });
    }
    try {
+      let query1 = { ...req.query };
+      delete query1.state, query1.city, query1.first_name, query1.last_name;
+      let query2 = {};
+      if (req.query.state) {
+         query2.state = req.query.state;
+      }
+      if (req.query.city) {
+         query2.city = req.query.city;
+      }
+      if (req.query.first_name) {
+         query2.first_name = req.query.first_name;
+      }
+      if (req.query.last_name) {
+         query2.last_name = req.query.last_name;
+      }
       const jobs = await database.joinSelect(
          "job",
-         "user_access",
+         "user",
          "user_id",
          "user_id",
          ["job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
-         ["username"],
-         { ...req.query },
+         ["first_name", "last_name", "city", "state"],
+         query1,
+         query2,
       );
       res.status(200).send(jobs);
    } catch (err) {
@@ -38,11 +54,11 @@ router.get("/:job_id", async function (req, res, next) {
    try {
       const emp = await database.joinSelect(
          "employee_history",
-         "user_access",
+         "user",
          "user_id",
          "user_id",
          [("eh_id", "user_id", "job_id", "paid", "done")],
-         ["user_name"],
+         ["first_name", "last_name"],
          { ...req.query },
       );
       res.status(200).send(emp);

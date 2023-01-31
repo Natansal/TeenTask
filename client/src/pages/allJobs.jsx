@@ -8,23 +8,38 @@ function Jobs() {
    const [jobs, setJobs] = useState();
    const { userContext } = useContext(UserContext);
    useEffect(() => {
-      fetch(`${serverAdress}/jobs?available=1`, {
+      fetch(`${serverAdress}/jobs?available=1&state=${userContext.state}`, {
          method: "GET",
          credentials: "include",
       })
          .then((res) => res.json())
-         .then((res) => setJobs(res));
+         .then((res) => {
+            res = res.sort((a, b) => (a.city === userContext.city ? 1 : -1));
+            setJobs(res);
+         });
    }, [userContext]);
 
    if (!jobs) {
       return <Loading />;
    }
-   console.log(jobs);
+
+   function handleClick(job_id) {
+      if (!window.confirm("Do you want to aplly for this job?")) {
+         return;
+      }
+      fetch(`${serverAdress}/jobs/${job_id}`, {
+         method: "POST",
+         headers: { "Content-type": "application/json" },
+         body: JSON.stringify({}),
+      });
+      alert("Applied successfuly");
+   }
    return (
       <div>
          {jobs.map((job, index) => (
             <Job
                {...job}
+               handleClick={handleClick}
                key={index}
             />
          ))}

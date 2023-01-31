@@ -41,12 +41,19 @@ function App() {
    const [userContext, setUserContext] = useState({});
    const navigate = useNavigate();
 
-   const setNewUserContext = (user_id, userType) => {
+   const setNewUserContext = (
+      user_id = userContext.userId,
+      userType = userContext.user_type,
+      city = userContext.city,
+      state = userContext.state,
+   ) => {
       return setUserContext((prev) => {
          return {
             ...prev,
             userId: user_id,
             user_type: userType,
+            city,
+            state,
          };
       });
    };
@@ -66,7 +73,7 @@ function App() {
                alert(res.message);
                return navigate("/login");
             }
-            setNewUserContext(res.id, res.user_type);
+            setNewUserContext(res.id, res.user_type, res.city, res.state);
             navigate("/user");
          });
    }, []);

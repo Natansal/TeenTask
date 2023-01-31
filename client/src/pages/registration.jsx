@@ -48,7 +48,7 @@ function Registration() {
       const regex = /^[0-9]{9}$/;
       const { phone_number, citizen_num } = user_info;
       console.log(regex.test(phone_number));
-      if(!regex.test(phone_number) || !regex.test(citizen_num)){
+      if (!regex.test(phone_number) || !regex.test(citizen_num)) {
          return alert("Your phone number or citizen number are invalid, please try again.");
       }
       let res = await fetch(`${serverAdress}/user_access/register`, {
@@ -59,7 +59,7 @@ function Registration() {
       res = await res.json();
       if (res.signed) {
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
-         setNewUserContext(res.userId, res.user_type);
+         setNewUserContext(res.userId, res.user_type, res.city, res.state);
          navigate("/user");
       }
       alert(res.message);

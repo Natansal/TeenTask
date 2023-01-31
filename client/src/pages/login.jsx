@@ -40,7 +40,7 @@ function Login() {
       res = await res.json();
       if (res.logged) {
          // alert(res.message);
-         setNewUserContext(res.id, res.user_type);
+         setNewUserContext(res.id, res.user_type, res.city, res.state);
          setCookie("mainCookie", res.cookie, new Date(res.expDate));
          navigate("/user");
       } else {
