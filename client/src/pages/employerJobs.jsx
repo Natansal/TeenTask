@@ -8,7 +8,7 @@ function EmployerJobs() {
    const [jobs, setJobs] = useState();
    const { userContext } = useContext(UserContext);
    useEffect(() => {
-      fetch(`${serverAdress}/jobs?user_id=${userContext.userId}`, {
+      fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}`, {
          method: "GET",
          credentials: "include",
       })

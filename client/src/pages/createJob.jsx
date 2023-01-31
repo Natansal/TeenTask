@@ -11,77 +11,89 @@ function CreateJob() {
    const start_date = useRef();
    const end_date = useRef();
    const [formData, setFormData] = useState({
-      description: '',
-      category: '',
-      payment: '',
-      start_date: '',
-      end_date: '',
-      payment_type: ''
+      description: "",
+      category: "",
+      payment: "",
+      start_date: "",
+      end_date: "",
+      payment_type: "",
    });
    const handleChange = (event) => {
       const { name, value } = event.target;
-      setFormData(formData => {
+      setFormData((formData) => {
          return {
             ...formData,
-            [name]: value
-         }
+            [name]: value,
+         };
       });
    };
    const startDateTimeHandleChange = (date) => {
-      setFormData(formData => {
+      setFormData((formData) => {
          return {
             ...formData,
-            start_date: date
-         }
-      })
-   }
+            start_date: date,
+         };
+      });
+   };
    const endDateTimeHandleChange = (date) => {
-      setFormData(formData => {
+      setFormData((formData) => {
          return {
             ...formData,
-            end_date: date
-         }
-      })
-   }
+            end_date: date,
+         };
+      });
+   };
    const handleSubmit = (event) => {
       event.preventDefault();
       setErrors({});
       let newErrors = {};
 
       if (!formData.description) {
-         newErrors.description = 'Description is required';
+         newErrors.description = "Description is required";
       }
 
       if (!formData.category) {
-         newErrors.category = 'Category is required';
+         newErrors.category = "Category is required";
       }
 
       if (!formData.payment) {
-         newErrors.payment = 'Payment is required';
+         newErrors.payment = "Payment is required";
       } else if (isNaN(formData.payment)) {
-         newErrors.payment = 'Payment must be a number';
+         newErrors.payment = "Payment must be a number";
       }
 
       if (!formData.start_date) {
-         newErrors.start_date = 'Start date is required';
+         newErrors.start_date = "Start date is required";
       }
 
       if (!formData.end_date) {
-         newErrors.end_date = 'End date is required';
+         newErrors.end_date = "End date is required";
       }
 
       if (!formData.payment_type) {
-         newErrors.payment_type = 'Payment type is required';
+         newErrors.payment_type = "Payment type is required";
+      }
+      if (formData.start_date && new Date(formData.start_date).getTime() < new Date().getTime()) {
+         newErrors.start_date = "Start date has already accured";
+      }
+      if (
+         formData.end_date &&
+         formData.start_date &&
+         new Date(formData.start_date).getTime() > new Date(formData.end_date).getTime()
+      ) {
+         newErrors.end_date = "End date cannot be before the start date";
       }
 
       setErrors(newErrors);
       console.log(formData.start_date, formData.end_date);
       if (!Object.keys(newErrors).length) {
          fetch(`${serverAdress}/jobs`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user_id: userContext.userId ,...formData})
-         }).then(res => res.json()).then(answer => alert(answer.message))
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userContext.userId, ...formData }),
+         })
+            .then((res) => res.json())
+            .then((answer) => alert(answer.message));
       }
    };
 
@@ -172,6 +184,6 @@ function CreateJob() {
          <button type="submit">Submit</button>
       </form>
    );
-};
+}
 
 export default CreateJob;

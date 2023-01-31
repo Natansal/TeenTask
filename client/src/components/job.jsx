@@ -30,20 +30,17 @@ function Job(props) {
       accepted,
    } = props;
 
-   const showApplicantsBtn = (e) => {
-      let applicantsMap = [];
-      // if (applicants.length === 0) {
+   const showApplicantsBtn = (bool) => {
       fetch(`${serverAdress}/jobs/${job_id}`, {
          method: "GET",
          credentials: "include",
       })
          .then((response) => response.json())
          .then((response) => {
-            for (let i = 0; i < response.length; i++) {
-               applicantsMap.push({ firstName: response[i].first_name, lastName: response[i].last_name });
+            setApplicants(response);
+            if (bool !== true) {
+               setShowApplicants((prev) => (prev ? false : true));
             }
-            setApplicants(applicantsMap);
-            setShowApplicants((prev) => (prev ? false : true));
          });
    };
    function markPaid() {
@@ -57,36 +54,47 @@ function Job(props) {
             alert(res.message);
          });
    }
+
+   function deleteJob() {
+      fetch(`${serverAdress}/jobs/${job_id}`, {
+         method: "DELETE",
+      })
+         .then((res) => res.json())
+         .then((res) => alert(res.message));
+   }
    return (
       <div className="job">
          {userContext.user_type != 1 && <h1>From: {first_name + " " + last_name}</h1>}
          <h2>Category: {category}</h2>
          <h2>Description: {description}</h2>
-         <h2>Payment: {payment + "$"}</h2>
+         <h2>Payment: {payment}$</h2>
          <h2>Start date: {new Date(start_date).toLocaleString()}</h2>
          <h2>End date: {new Date(end_date).toLocaleString()}</h2>
          <h2>Payment type: {payment_type}</h2>
          <h2>Loaction: {`${city}, ${state}`}</h2>
-         {appliedTo && <h2>Status: {accepted === 0 ? "Pending" : "Accepted"}</h2>}
-         {appliedTo && accepted == 1 && <h2>Done: {done === 0 ? "Not yet" : "Yes"}</h2>}
-         {userContext.user_type != 0 && <button onClick={showApplicantsBtn}>See all applicants </button>}
-         {showApplicants
-            ? applicants.map((applicant) => (
-                 <Applicants
-                    key={Math.random() * 1000}
-                    firstName={applicant.firstName}
-                    lastName={applicant.lastName}
-                 />
-              ))
-            : null}
-         {appliedTo && accepted == 1 && done == 1 && <h2>Paid: {paid === 0 ? "Not yet" : "Yes"}</h2>}
-         {userContext.user_type != 0 && <h2>Job proccess: Pending/Done </h2>}
-         {appliedTo && accepted == 1 && done == 1 && <button onClick={markPaid}>Mark as paid </button>}
+         {accepted !== undefined && <h2>Status: {accepted === 1 ? "Accepted" : "Pending"}</h2>}
+         {appliedTo !== undefined && accepted == 1 && <h2>Done: {done === 0 ? "Not yet" : "Yes"}</h2>}
+         {userContext.user_type != 0 && (
+            <>
+               <button onClick={showApplicantsBtn}>See all applicants </button>
+               {accepted == 0 && <button onClick={deleteJob}>Delete job</button>}
+            </>
+         )}
+         {appliedTo !== undefined && accepted == 1 && done == 1 && <h2>Paid: {paid === 0 ? "Not yet" : "Yes"}</h2>}
+         {appliedTo !== undefined && accepted == 1 && done == 1 && <button onClick={markPaid}>Mark as paid </button>}
          {userContext.user_type != 1 && (
             <button onClick={() => handleClick(job_id, eh_id)}>
                {appliedTo ? "Delete appliment to this job" : "Apply to this job"}
             </button>
          )}
+         {showApplicants &&
+            applicants.map((applicant, index) => (
+               <Applicants
+                  key={index}
+                  {...applicant}
+                  handleReject={showApplicantsBtn}
+               />
+            ))}
       </div>
    );
 }
