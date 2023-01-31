@@ -33,7 +33,9 @@ function Jobs() {
          body: JSON.stringify({
             user_id: userContext.userId,
          }),
-      }).then((res) => alert("Applied successfuly"));
+      })
+         .then((res) => res.json())
+         .then((res) => alert(res.message));
    }
    return (
       <div>

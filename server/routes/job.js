@@ -112,6 +112,14 @@ router.post("/:job_id", async function (req, res, next) {
       values.push(obj[key]);
    }
    try {
+      let result = await database.select("employee_history", undefined, { user_id: req.body.user_id, job_id });
+      if (result.length !== 0) {
+         return res.status(400).send({ message: "You have already applied to this job!" });
+      }
+   } catch {
+      return res.status(400).send({ message: "Something went wrong...", error: err });
+   }
+   try {
       let id = await database.insert("employee_history", cols, values).insertId;
       return res.status(200).send({ message: "Applied successfuly!", req_id: id });
    } catch (err) {
