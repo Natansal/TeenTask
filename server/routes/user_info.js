@@ -25,7 +25,6 @@ router.put("/:userId", function (req, res) {
    if (!password || !user_info) {
       return res.status(400).send({ message: "Invalid data" });
    }
-   console.log(password, user_info, userId);
    params = [];
    values = [];
    for (let key in user_info) {
