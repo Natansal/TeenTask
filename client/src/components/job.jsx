@@ -28,7 +28,7 @@ function Job(props) {
          credentials: "include"
       })
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => console.log("res",response))
       // const createObjects = (firstNames, lastName) => {
       //    return firstNames.map((firstName) => ({
       //      first_name: firstName,
