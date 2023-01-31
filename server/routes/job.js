@@ -59,9 +59,9 @@ router.get("/:job_id", async function (req, res, next) {
             "user_id",
             "job_id",
             "job_id",
-            ["first_name", "last_name"],
-            ["paid", "done", "user_id", "accepted"],
-            ["job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
+            ["first_name", "last_name"],//employee data
+            ["paid", "done", "user_id", "accepted"],//appliment data
+            ["job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],//job data
             undefined,
             undefined,
             queryObj,

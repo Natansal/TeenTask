@@ -112,7 +112,7 @@ class Database {
       let params = [
          ...params1.map((val) => `${table1}.${val}`),
          ...params2.map((val) => `${table2}.${val}`),
-         params3.map((val) => `${table3}:${val}`),
+         params3.map((val) => `${table3}.${val}`),
       ];
       let queryObj = {
          ...objForEach(queryObj1, (val, key) => {
@@ -134,7 +134,8 @@ class Database {
          FROM ${table1}\
          JOIN ${table2}\
          ON ${table1}.${join1}=${table2}.${join2}\
-         JOIN ${table2}.${join3}=${table3}.${join4}\
+         JOIN ${table3}\
+         ON ${table2}.${join3}=${table3}.${join4}\
          ${this.createQueryFromRequest(queryObj)}`;
          this.con.query(sql, (err, res) => {
             if (err) {
