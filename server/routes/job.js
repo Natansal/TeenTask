@@ -50,18 +50,45 @@ router.get("/:job_id", async function (req, res, next) {
    let queryObj = { ...req.query };
    if (job_id !== "*") {
       queryObj.job_id = job_id;
-   }
-   try {
-      const emp = await database.joinSelect(
-         "employee_history",
+      try {
+         const emp = await database.tripleJoinSelect(
+            "user",
+            "employee_history",
+            "job",
+            "user_id",
+            "user_id",
+            "job_id",
+            "job_id",
+            ["first_name", "last_name"],
+            ["paid", "done", "user_id"],
+            ["job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
+            undefined,
+            undefined,
+            queryObj,
+         );
+         res.status(200).send(emp);
+      } catch (err) {
+         return res.status(400).send({ message: "Something went wrong...", error: err });
+      }
+   } else {
+      const emp = await database.tripleJoinSelect(
          "user",
+         "job",
+         "employee_history",
          "user_id",
          "user_id",
-         [("eh_id", "user_id", "job_id", "paid", "done")],
+         "job_id",
+         "job_id",
          ["first_name", "last_name"],
-         { ...req.query },
+         ["user_id", "job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
+         ["paid", "done"],
+         undefined,
+         undefined,
+         queryObj,
       );
       res.status(200).send(emp);
+   }
+   try {
    } catch (err) {
       return res.status(400).send({ message: "Something went wrong...", error: err });
    }

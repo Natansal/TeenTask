@@ -16,7 +16,7 @@ function objForEach(obj, fn) {
 }
 
 class Database {
-   constructor(host, user, password, database, onConnection = () => { }) {
+   constructor(host, user, password, database, onConnection = () => {}) {
       this.con = mysql.createConnection({
          host,
          user,
@@ -68,8 +68,14 @@ class Database {
       }
       let params = [...params1.map((val) => `${table1}.${val}`), ...params2.map((val) => `${table2}.${val}`)];
       let queryObj = {
-         ...objForEach(queryObj1, (val, key) => { queryObj1[`${table1}.${key}`] = val; delete queryObj1[key] }),
-         ...objForEach(queryObj2, (val, key) => { queryObj2[`${table2}.${key}`] = val; delete queryObj2[key] })
+         ...objForEach(queryObj1, (val, key) => {
+            queryObj1[`${table1}.${key}`] = val;
+            delete queryObj1[key];
+         }),
+         ...objForEach(queryObj2, (val, key) => {
+            queryObj2[`${table2}.${key}`] = val;
+            delete queryObj2[key];
+         }),
       };
       console.log(params, queryObj);
       return new Promise((resolve, reject) => {
@@ -77,6 +83,58 @@ class Database {
          FROM ${table1}\
          JOIN ${table2}\
          ON ${table1}.${join1}=${table2}.${join2}\
+         ${this.createQueryFromRequest(queryObj)}`;
+         this.con.query(sql, (err, res) => {
+            if (err) {
+               reject(err);
+            } else {
+               resolve(res);
+            }
+         });
+      });
+   }
+
+   async tripleJoinSelect(
+      table1,
+      table2,
+      table3,
+      join1,
+      join2 = join1,
+      join3 = join2,
+      join4 = join3,
+      params1 = [],
+      params2 = [],
+      params3 = [],
+      queryObj1 = {},
+      queryObj2 = {},
+      queryObj3 = {},
+   ) {
+      let params = [
+         ...params1.map((val) => `${table1}.${val}`),
+         ...params2.map((val) => `${table2}.${val}`),
+         params3.map((val) => `${table3}:${val}`),
+      ];
+      let queryObj = {
+         ...objForEach(queryObj1, (val, key) => {
+            queryObj1[`${table1}.${key}`] = val;
+            delete queryObj1[key];
+         }),
+         ...objForEach(queryObj2, (val, key) => {
+            queryObj2[`${table2}.${key}`] = val;
+            delete queryObj2[key];
+         }),
+
+         ...objForEach(queryObj3, (val, key) => {
+            queryObj3[`${table3}.${key}`] = val;
+            delete queryObj3[key];
+         }),
+      };
+      return new Promise((resolve, reject) => {
+         let sql = `SELECT ${params.length !== 0 ? params.join(",") : "*"}\
+         FROM ${table1}\
+         JOIN ${table2}\
+         ON ${table1}.${join1}=${table2}.${join2}\
+         JOIN ${table2}.${join3}=${table3}.${join4}\
          ${this.createQueryFromRequest(queryObj)}`;
          this.con.query(sql, (err, res) => {
             if (err) {
@@ -151,6 +209,16 @@ class Database {
       }
       let id = user[0].user_id;
       return id;
+   }
+
+   async query(query) {
+      this.con.query(query, (err, res) => {
+         if (err) {
+            reject(err);
+         } else {
+            resolve(res);
+         }
+      });
    }
 }
 
