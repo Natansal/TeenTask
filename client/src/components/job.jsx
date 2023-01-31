@@ -1,8 +1,13 @@
 import React, { useContext } from "react";
+import { useState } from "react";
 import { UserContext } from "../App";
 
 function Job(props) {
    const { userContext } = useContext(UserContext);
+   
+   const showApplicants = (e) => {
+      return 
+   }
    const {
       first_name,
       last_name,
@@ -34,7 +39,7 @@ function Job(props) {
          <h2>Job proccess: Pending/Done </h2>
          )}
          {userContext.user_type != 0 && (
-         <h2>Employee Name: Daniel</h2>
+         <button onClick={showApplicants}>See all applicants </button>
          )}
          {userContext.user_type != 1 && (
             <button onClick={() => handleClick(job_id)}>Apply to this job</button>
