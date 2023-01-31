@@ -9,7 +9,6 @@ function Job(props) {
    const { userContext, myAlert } = useContext(UserContext);
    const [applicants, setApplicants] = useState([]);
    const [showApplicants, setShowApplicants] = useState(false);
-
    const {
       first_name,
       last_name,
@@ -27,10 +26,11 @@ function Job(props) {
       eh_id,
       paid,
       done,
-      accepted,
+      available,
+      accepted = available == 1 ? 0 : 1,
    } = props;
 
-   const showApplicantsClick = (bool) => {
+   const showApplicantsClick = (revertShow) => {
       fetch(`${serverAdress}/jobs/${job_id}`, {
          method: "GET",
          credentials: "include",
@@ -38,16 +38,33 @@ function Job(props) {
          .then((response) => response.json())
          .then((response) => {
             setApplicants(response);
-            if (bool !== true) {
+            console.log("here!", response);
+            if (revertShow !== true) {
                setShowApplicants((prev) => (prev ? false : true));
+            }
+            else {
+               props.update();
             }
          });
    };
-   function markPaid() {
+   function setPaid() {
       fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
          method: "PUT",
          headers: { "Content-type": "application/json" },
          body: JSON.stringify({ paid: 1 }),
+      })
+         .then((res) => res.json())
+         .then((res) => {
+            myAlert(res.message);
+            showApplicantsClick(true);
+         });
+   }
+
+   function setDone(e) {
+      fetch(`${serverAdress}/jobs/${job_id}`, {
+         method: "PUT",
+         headers: { "Content-type": "application/json" },
+         body: JSON.stringify({ done: 1 }),
       })
          .then((res) => res.json())
          .then((res) => {
@@ -61,18 +78,9 @@ function Job(props) {
          method: "DELETE",
       })
          .then((res) => res.json())
-         .then((res) => myAlert(res.message));
-   }
-
-   function setDone(e) {
-      fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
-         method: "PUT",
-         headers: { "Content-type": "application/json" },
-         body: JSON.stringify({ done: 1 }),
-      })
-         .then((res) => res.json())
          .then((res) => {
             myAlert(res.message);
+            showApplicantsClick(true);
          });
    }
    return (
@@ -95,7 +103,7 @@ function Job(props) {
             </>
          )}
          {appliedTo !== undefined && accepted == 1 && done == 1 && <h2>Paid: {paid === 0 ? "Not yet" : "Yes"}</h2>}
-         {appliedTo !== undefined && accepted == 1 && done == 1 && <button onClick={markPaid}>Mark as paid </button>}
+         {appliedTo !== undefined && accepted == 1 && done == 1 && <button onClick={setPaid}>Mark as paid </button>}
          {userContext.user_type != 1 && (
             <button onClick={() => handleClick(job_id, eh_id)}>
                {appliedTo ? "Delete appliment to this job" : "Apply to this job"}
@@ -104,7 +112,7 @@ function Job(props) {
          {showApplicants &&
             applicants.map((applicant, index) => (
                <Applicants
-                  key={index}
+                  key={index + Math.random()}
                   {...applicant}
                   handleReject={showApplicantsClick}
                />

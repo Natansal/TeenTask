@@ -7,8 +7,9 @@ import Job from "../components/job";
 function EmployerJobs() {
    const [jobs, setJobs] = useState();
    const { userContext, myAlert } = useContext(UserContext);
+   const [num, setNum] = useState(0);
    useEffect(() => {
-      fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}`, {
+      fetch(`${serverAdress}/jobs?user_id=${userContext.userId}`, {
          method: "GET",
          credentials: "include",
       })
@@ -17,15 +18,20 @@ function EmployerJobs() {
             res = res.sort((a, b) => (a.city === userContext.city ? 1 : -1));
             setJobs(res);
          });
-   }, [userContext]);
+   }, [userContext, num]);
 
    if (!jobs) {
       return <Loading />;
+   }
+
+   function update() {
+      setNum(prev => prev + 1);
    }
    return (
       <div>
          {jobs.map((job, index) => (
             <Job
+               update={update}
                {...job}
                key={index}
             />

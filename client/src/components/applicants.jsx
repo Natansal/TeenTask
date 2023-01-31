@@ -11,6 +11,7 @@ function Applicants(props) {
    function openReviewForm(e) {
       setRevFormVis((prev) => !prev);
    }
+
    function accept(e) {
       fetch(`${serverAdress}/jobs/${props.job_id}/${props.eh_id}`, {
          method: "PUT",

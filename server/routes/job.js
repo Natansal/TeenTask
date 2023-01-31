@@ -29,7 +29,7 @@ router.get("/", async function (req, res, next) {
          "user",
          "user_id",
          "user_id",
-         ["job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
+         ["job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type", "available", "done"],
          ["first_name", "last_name", "city", "state"],
          query1,
          query2,
@@ -60,8 +60,8 @@ router.get("/:job_id", async function (req, res, next) {
             "job_id",
             "job_id",
             ["first_name", "last_name", "email", "phone_number", "birth_date"], //employee data
-            ["paid", "done", "user_id", "accepted", "done", "eh_id"], //appliment data
-            ["job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"], //job data
+            ["paid", "user_id", "accepted", "eh_id"], //appliment data
+            ["job_id", "done", "description", "category", "payment", "start_date", "end_date", "payment_type"], //job data
             undefined,
             undefined,
             queryObj,
@@ -80,11 +80,10 @@ router.get("/:job_id", async function (req, res, next) {
          "job_id",
          "job_id",
          ["first_name", "last_name", "state", "city"],
-         ["user_id", "job_id", "description", "category", "payment", "start_date", "end_date", "payment_type"],
-         ["eh_id", "paid", "done", "accepted"],
+         ["user_id", "job_id", "done", "description", "category", "payment", "start_date", "end_date", "payment_type"],
+         ["eh_id", "paid", "accepted"],
          undefined,
-         undefined,
-         queryObj,
+         queryObj
       );
       res.status(200).send(emp);
    }
@@ -131,7 +130,6 @@ router.post("/:job_id", async function (req, res, next) {
    }
    let obj = { ...req.body, job_id };
    obj.paid = obj.paid ? obj.paid : 0;
-   obj.done = obj.done ? obj.done : 0;
    let cols = [];
    let values = [];
    for (let key in obj) {
