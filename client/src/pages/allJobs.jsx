@@ -7,6 +7,7 @@ import Job from "../components/job";
 function Jobs() {
    const [jobs, setJobs] = useState();
    const { userContext } = useContext(UserContext);
+   
    useEffect(() => {
       fetch(`${serverAdress}/jobs?available=1&state=${userContext.state}`, {
          method: "GET",

@@ -11,6 +11,7 @@ import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 import UpdateBankInfo from "./pages/UpdateBankInfo";
 import Jobs from "./pages/allJobs";
+import MyAppliments from "./pages/MyAppliments";
 
 export const UserContext = createContext();
 
@@ -135,6 +136,10 @@ function App() {
                <Route
                   path="employerJobs"
                   element={<EmployerJobs />}
+               />
+               <Route
+                  path="myAppliments"
+                  element={<MyAppliments />}
                />
             </Route>
          </Routes>
