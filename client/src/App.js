@@ -6,6 +6,7 @@ import HomePage from "./pages/user";
 import UserInfo from "./pages/userInfo";
 import UpdatePage from "./pages/updateInfo";
 import CreateJob from "./pages/createJob";
+import EmployerJobs from "./pages/employerJobs";
 import serverAdress from "./serverAdress";
 import { useNavigate } from "react-router-dom";
 import UpdateBankInfo from "./pages/UpdateBankInfo";
@@ -130,6 +131,10 @@ function App() {
                <Route
                   path="jobs"
                   element={<Jobs />}
+               />
+               <Route
+                  path="employerJobs"
+                  element={<EmployerJobs />}
                />
             </Route>
          </Routes>
