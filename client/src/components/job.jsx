@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import { UserContext } from "../App";
+import serverAdress from "../serverAdress";
 
 function Job(props) {
    const { userContext } = useContext(UserContext);
+   const [applicants, setApplicants] = useState();
    
-   const showApplicants = (e) => {
-      return 
-   }
    const {
       first_name,
       last_name,
@@ -22,7 +21,21 @@ function Job(props) {
       handleClick,
       job_id,
    } = props;
-
+   
+   const showApplicants = async (e) => {
+      fetch(`${serverAdress}/jobs/${job_id}`, {
+         method: 'GET',
+         credentials: "include"
+      })
+      .then(response => response.json())
+      .then(response => console.log(response))
+      // const createObjects = (firstNames, lastName) => {
+      //    return firstNames.map((firstName) => ({
+      //      first_name: firstName,
+      //      last_name: lastName,
+      //    }));
+      //  };
+   }
    return (
       <div className="job">
          {userContext.user_type != 1 && (

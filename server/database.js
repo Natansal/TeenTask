@@ -112,7 +112,7 @@ class Database {
       let params = [
          ...params1.map((val) => `${table1}.${val}`),
          ...params2.map((val) => `${table2}.${val}`),
-         params3.map((val) => `${table3}:${val}`),
+         params3.map((val) => `${table3}.${val}`),
       ];
       let queryObj = {
          ...objForEach(queryObj1, (val, key) => {
