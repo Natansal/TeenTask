@@ -1,5 +1,6 @@
   .loginPage {
-    background-image: url(../images/2641047.webp);    background-repeat: no-repeat;
+    background-image: url(../images/2641047.webp);    
+    background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: column;
