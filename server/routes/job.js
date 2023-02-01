@@ -29,14 +29,25 @@ router.get("/", async function (req, res, next) {
          "user",
          "user_id",
          "user_id",
-         ["job_id", "user_id", "description", "category", "payment", "start_date", "end_date", "payment_type", "available", "done"],
+         [
+            "job_id",
+            "user_id",
+            "description",
+            "category",
+            "payment",
+            "start_date",
+            "end_date",
+            "payment_type",
+            "available",
+            "done",
+         ],
          ["first_name", "last_name", "city", "state"],
          query1,
          query2,
       );
       res.status(200).send(jobs);
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nplease try again later", error: err });
    }
 });
 
@@ -68,7 +79,7 @@ router.get("/:job_id", async function (req, res, next) {
          );
          res.status(200).send(emp);
       } catch (err) {
-         return res.status(400).send({ message: "Something went wrong...", error: err });
+         return res.status(400).send({ message: "Something went wrong...\nplease try again later", error: err });
       }
    } else {
       const emp = await database.tripleJoinSelect(
@@ -83,13 +94,13 @@ router.get("/:job_id", async function (req, res, next) {
          ["user_id", "job_id", "done", "description", "category", "payment", "start_date", "end_date", "payment_type"],
          ["eh_id", "paid", "accepted"],
          undefined,
-         queryObj
+         queryObj,
       );
       res.status(200).send(emp);
    }
    try {
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nplease try again later", error: err });
    }
 });
 
@@ -116,9 +127,9 @@ router.post("/", async function (req, res, next) {
    try {
       let id = await database.insert("job", cols, values);
       console.log(id);
-      return res.status(200).send({ message: "added successfuly", job_id: id.insertId });
+      return res.status(200).send({ message: "Job added successfuly", job_id: id.insertId });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nplease try again later", error: err });
    }
 });
 
@@ -142,13 +153,13 @@ router.post("/:job_id", async function (req, res, next) {
          return res.status(400).send({ message: "You have already applied to this job!" });
       }
    } catch {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
    try {
       let id = await database.insert("employee_history", cols, values).insertId;
       return res.status(200).send({ message: "Applied successfuly!", req_id: id });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 
@@ -159,7 +170,7 @@ router.delete("/:job_id", async function (req, res, next) {
       await database.delete("job", { job_id });
       res.status(200).send({ message: "deleted successfuly!" });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 
@@ -172,9 +183,9 @@ router.delete("/:job_id/:eh_id", async function (req, res, next) {
    }
    try {
       await database.delete("employee_history", queryObj);
-      res.status(200).send({ message: "deleted successfuly!" });
+      res.status(200).send({ message: "Done!" });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 
@@ -189,9 +200,9 @@ router.put("/:job_id", async function (req, res, next) {
    }
    try {
       await database.update("job", cols, values, { job_id });
-      return res.status(200).send({ message: "Updated successfuly" });
+      return res.status(200).send({ message: "Done!" });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 
@@ -206,9 +217,9 @@ router.put("/:job_id/:eh_id", async function (req, res, next) {
    }
    try {
       await database.update("employee_history", cols, values, { job_id, eh_id });
-      return res.status(200).send({ message: "Updated successfuly" });
+      return res.status(200).send({ message: "Done!" });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 module.exports = router;

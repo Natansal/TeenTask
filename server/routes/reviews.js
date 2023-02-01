@@ -20,7 +20,7 @@ router.get("/", async function (req, res, next) {
       );
       res.status(200).send(revs);
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 
@@ -39,7 +39,7 @@ router.post("/", async function (req, res, next) {
       let id = await database.insert("review", cols, values).insertId;
       return res.status(200).send({ message: "added successfuly", review_id: id });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 
@@ -50,7 +50,7 @@ router.delete("/:rev_id", async function (req, res, next) {
       await database.delete("review", { rev_id });
       res.status(200).send({ message: "deleted successfuly!" });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\Please try later", error: err });
    }
 });
 
@@ -67,7 +67,7 @@ router.put("/:rev_id", async function (req, res, next) {
       await database.update("review", cols, values, { rev_id });
       return res.status(200).send({ message: "Updated successfuly" });
    } catch (err) {
-      return res.status(400).send({ message: "Something went wrong...", error: err });
+      return res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err });
    }
 });
 

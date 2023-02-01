@@ -13,10 +13,12 @@ router.get("/:userId/:attr", function (req, res) {
             database
                .select("user", [attr], { user_id: userId })
                .then((result) => res.status(200).send(result))
-               .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
+               .catch((err) =>
+                  res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err }),
+               );
          }
       })
-      .catch((err) => res.status(400).send({ message: "Something went wrong", error: err }));
+      .catch((err) => res.status(400).send({ message: "Something went wrong...\nPlease try again later", error: err }));
 });
 
 router.put("/:userId", function (req, res) {
