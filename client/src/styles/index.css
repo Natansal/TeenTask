@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Diplomata+SC&family=Fredoka+One&family=Montserrat&family=Nerko+One&family=Open+Sans&family=Righteous&family=Roboto:wght@400;500&family=Rubik+Distressed&family=Rubik+Glitch&family=Zen+Dots&display=swap');
+
 html,
 html * {
     margin: 0;
@@ -35,8 +37,11 @@ body,
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
-    width: 20vw;
+input[type="email"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 80%;
     height: 3vh;
     margin-bottom: 1vh;
     padding: 0.5vh;
@@ -44,27 +49,19 @@ input[type="email"] {
     text-align: center;
 }
 
-input[type="submit"] {
-    width: 10vw;
-    height: 3vh;
-    background-color: blue;
-    color: white;
-    border: none;
-    border-radius: 0.5vh;
-    font-size: 2vh;
-    cursor: pointer;
-    text-align: center;
+select {
+    width: 82.5%;
+    height: 4.5vh;
 }
 
-button {
-    width: 10vw;
-    height: 3vh;
-    margin-top: 2vh;
-    background-color: lightblue;
-    color: white;
+button:not(.alert button),
+input[type="submit"] {
+    padding: 6px;
+    background-color: #91D8E4;
+    color: #5c56d9;
     border: none;
     border-radius: 0.5vh;
-    font-size: 2vh;
+    font-size: 3vh;
     cursor: pointer;
     text-align: center;
 }
@@ -73,4 +70,12 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #FCFFE7;
+    border-radius: 10px;
+    padding: 2vh;
+    width: 400px;
+}
+
+label {
+    font-size: larger;
 }

@@ -35,7 +35,7 @@ function MyAppliments({ accepted }) {
          });
    }
    return (
-      <div className="applimentsPage">
+      <div className="jobsPage">
          {appliments.map((job) => (
             <Job
                {...job}

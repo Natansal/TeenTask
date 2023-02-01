@@ -39,7 +39,7 @@ function Jobs() {
          .then((res) => myAlert(res.message));
    }
    return (
-      <div>
+      <div className="jobsPage">
          {jobs.map((job, index) => (
             <Job
                {...job}

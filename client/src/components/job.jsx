@@ -41,8 +41,7 @@ function Job(props) {
             console.log("here!", response);
             if (revertShow !== true) {
                setShowApplicants((prev) => (prev ? false : true));
-            }
-            else {
+            } else {
                props.update();
             }
          });
@@ -84,7 +83,7 @@ function Job(props) {
          });
    }
    return (
-      <div className="job">
+      <div className="infoPage job">
          {userContext.user_type != 1 && <h1>From: {first_name + " " + last_name}</h1>}
          <h2>Category: {category}</h2>
          <h2>Description: {description}</h2>

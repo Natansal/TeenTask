@@ -9,7 +9,7 @@ function UpdatePage() {
    const [user_info, setUserInfo] = useState({
       first_name: "",
       last_name: "",
-      user_type: 0,
+      user_type: "",
       email: "",
       phone_number: "",
       birth_date: "",
@@ -70,10 +70,16 @@ function UpdatePage() {
 
    return (
       <div className="updatePage">
+         <h1>Update your personal information</h1>
          <form onSubmit={onSubmit}>
+            <h4>
+               *Fill only the fields you want to update
+               <br />
+               the password is required for any change
+            </h4>
             <input
                type="password"
-               placeholder="password"
+               placeholder="current password"
                onChange={onChange}
                name="password"
                value={password}
@@ -97,7 +103,7 @@ function UpdatePage() {
                name="user_type"
                onChange={onChange}
             >
-               <option value={""}>Select this option if you don't want to change</option>
+               <option value={""}>-- Select account type --</option>
                <option value={0}>Employee</option>
                <option value={1}>Employer</option>
             </select>
