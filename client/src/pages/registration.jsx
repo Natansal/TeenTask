@@ -100,7 +100,11 @@ function Registration() {
                name="last_name"
                value={user_info.last_name}
             />
+
+
+            <label className="center">Please selcet usertype</label>
             <select
+               className="center"
                value={user_info.user_type}
                name="user_type"
                onChange={onChange}
@@ -108,6 +112,17 @@ function Registration() {
                <option value={0}>Employee</option>
                <option value={1}>Employer</option>
             </select>
+            <label className="center">Date of birth</label>
+            <input
+               className="center"
+               id="birthDate"
+               type="date"
+               placeholder="Birth Date"
+               onChange={onChange}
+               name="birth_date"
+               value={user_info.birth_date}
+            />
+
             <input
                type="email"
                placeholder="Email"
@@ -121,13 +136,6 @@ function Registration() {
                onChange={onChange}
                name="phone_number"
                value={user_info.phone_number}
-            />
-            <input
-               type="date"
-               placeholder="Birth Date"
-               onChange={onChange}
-               name="birth_date"
-               value={user_info.birth_date}
             />
             <input
                type="text"
@@ -152,10 +160,10 @@ function Registration() {
             />
             <input
                type="submit"
-               value="Register"
+               value="Sgin up"
             />
+            <button onClick={tologIn}>Login</button>
          </form>
-         <button onClick={tologIn}>Login</button>
       </div>
    );
 }
