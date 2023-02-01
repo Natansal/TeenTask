@@ -97,6 +97,7 @@ function UpdatePage() {
                name="user_type"
                onChange={onChange}
             >
+               <option value={""}>Select this option if you don't want to change</option>
                <option value={0}>Employee</option>
                <option value={1}>Employer</option>
             </select>

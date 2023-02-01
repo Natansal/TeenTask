@@ -15,6 +15,8 @@ import MyAppliments from "./pages/MyAppliments";
 import Alert from "./components/Alert";
 import "./styles/homepage.css";
 import "./styles/index.css";
+import "./styles/login.css";
+import "./styles/registration.css";
 
 export const UserContext = createContext();
 
