@@ -13,7 +13,8 @@ import UpdateBankInfo from "./pages/UpdateBankInfo";
 import Jobs from "./pages/allJobs";
 import MyAppliments from "./pages/MyAppliments";
 import Alert from "./components/Alert";
-import "./styles/homepage.css"
+import "./styles/homepage.css";
+import "./styles/index.css";
 
 export const UserContext = createContext();
 
