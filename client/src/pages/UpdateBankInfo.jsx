@@ -101,6 +101,7 @@ function UpdateBankInfo() {
             <input
                id="bank_account"
                name="bank_account"
+               placeholder="123456789"
                type="text"
                value={values.bank_account}
                onChange={handleChange}
@@ -124,6 +125,7 @@ function UpdateBankInfo() {
             <input
                id="card_num"
                name="card_num"
+               placeholder="12/16 digits"
                type="text"
                value={values.card_num}
                onChange={handleChange}
@@ -134,6 +136,7 @@ function UpdateBankInfo() {
             <input
                id="exp_date"
                name="exp_date"
+               placeholder="MM/YY"
                type="text"
                value={values.exp_date}
                onChange={handleChange}

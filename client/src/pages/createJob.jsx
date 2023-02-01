@@ -137,6 +137,7 @@ function CreateJob() {
                type="text"
                id="payment"
                name="payment"
+               placeholder="Enter the amount that you want to pay"
                value={formData.payment}
                onChange={handleChange}
             />

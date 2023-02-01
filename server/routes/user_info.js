@@ -27,6 +27,12 @@ router.put("/:userId", function (req, res) {
    if (!password || !user_info) {
       return res.status(400).send({ message: "Invalid data" });
    }
+   if (user_info.city) {
+      user_info.city = user_info.city.toUpperCase();
+   }
+   if (user_info.state) {
+      user_info.state = user_info.state.toUpperCase();
+   }
    params = [];
    values = [];
    for (let key in user_info) {

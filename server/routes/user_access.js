@@ -100,6 +100,8 @@ router.get("/login", function (req, res, next) {
 
 router.post("/register", (req, res, next) => {
    let { user_access, user_info } = req.body;
+   user_info.city = user_info.city.toUpperCase();
+   user_info.state = user_info.state.toUpperCase();
    createCookie().then((cookie) => {
       user_access.cookie = cookie;
       user_access.cookie_exp_date = createExpDate();
@@ -112,7 +114,6 @@ router.post("/register", (req, res, next) => {
          params.push(key);
          values.push(user_access[key]);
       }
-      console.log(user_access);
       database
          .insert("user_access", params, values)
          .then(({ insertId }) => {

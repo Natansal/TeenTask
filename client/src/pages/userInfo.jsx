@@ -4,6 +4,9 @@ import { UserContext } from "../App";
 import serverAdress from "../serverAdress";
 import Loading from "./Loader";
 
+function captalizeFirst(inputString) {
+   return inputString.charAt(0).toUpperCase() + inputString.slice(1).toLowerCase();
+}
 function UserInfo() {
    const navigate = useNavigate();
    const { userContext, myAlert } = useContext(UserContext);
@@ -18,13 +21,20 @@ function UserInfo() {
       return info;
    };
    useEffect(() => {
-      getInfo().then((info) => setUserInfo(info));
+      getInfo().then((info) => {
+         if (info[0].state) {
+            info[0].state = captalizeFirst(info[0].state);
+         }
+         if (info[0].city) {
+            info[0].city = captalizeFirst(info[0].city);
+         }
+         return setUserInfo(info);
+      });
    }, [userContext.userId]);
 
    if (!userInfo) {
       return <Loading />;
    }
-
    return (
       <div className="infoPage">
          <h1>Your Personal info</h1>

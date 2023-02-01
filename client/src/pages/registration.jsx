@@ -133,6 +133,7 @@ function Registration() {
                type="text"
                placeholder="Phone Number"
                onChange={onChange}
+               
                name="phone_number"
                value={user_info.phone_number}
             />
