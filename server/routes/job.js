@@ -82,6 +82,11 @@ router.get("/:job_id", async function (req, res, next) {
          return res.status(400).send({ message: "Something went wrong...\nplease try again later", error: err });
       }
    } else {
+      let query2Obj = {};
+      if (queryObj.accepted) {
+         query2Obj.accepted = queryObj.accepted;
+         delete queryObj.accepted;
+      }
       const emp = await database.tripleJoinSelect(
          "user",
          "job",
@@ -95,6 +100,7 @@ router.get("/:job_id", async function (req, res, next) {
          ["eh_id", "paid", "accepted"],
          undefined,
          queryObj,
+         query2Obj,
       );
       res.status(200).send(emp);
    }

@@ -59,7 +59,7 @@ function Applicants(props) {
                <h1>
                   You have accept {props.first_name} to be your employee!
                   <br />
-                  Here is contact information
+                  Here is {props.first_name}'s contact information
                </h1>
                <h4>
                   {props.first_name}'s email: {props.email}

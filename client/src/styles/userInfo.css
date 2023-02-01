@@ -1,0 +1,35 @@
+.infoPage {
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px #82C3EC;
+}
+
+.infoPage h1 {
+    color: #472183;
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px #4B56D2;
+}
+
+.infoPage h2 {
+    color: #4B56D2;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.infoPage h2:last-of-type {
+    margin-bottom: 0;
+}
+
+.infoPage h2::before {
+    content: "";
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    background-color: #82C3EC;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-bottom: -3px;
+}
