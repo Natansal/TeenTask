@@ -127,6 +127,10 @@ function App() {
                   element={<HomePage />}
                >
                   <Route
+                     path=""
+                     element={<div className="logoPage"></div>}
+                  />
+                  <Route
                      path="userInfo"
                      element={<UserInfo />}
                   />
@@ -147,12 +151,20 @@ function App() {
                      element={<Jobs />}
                   />
                   <Route
-                     path="employerJobs"
-                     element={<EmployerJobs />}
+                     path="doneJobs"
+                     element={<EmployerJobs done={true} />}
                   />
                   <Route
-                     path="myAppliments"
-                     element={<MyAppliments />}
+                     path="pendingJobs"
+                     element={<EmployerJobs done={false} />}
+                  />
+                  <Route
+                     path="acceptedAppliments"
+                     element={<MyAppliments accepted={true} />}
+                  />
+                  <Route
+                     path="pendingAppliments"
+                     element={<MyAppliments accepted={false} />}
                   />
                </Route>
             </Routes>

@@ -23,7 +23,12 @@ function Navbar() {
             )}
             {userContext.user_type != 0 && (
                <li>
-                  <NavLink to="/user/employerJobs">See all the jobs that you have created</NavLink>
+                  <NavLink to="/user/doneJobs">See all the jobs that have ended</NavLink>
+               </li>
+            )}
+            {userContext.user_type != 0 && (
+               <li>
+                  <NavLink to="/user/pendingJobs">See all the jobs that are pending</NavLink>
                </li>
             )}
             {userContext.user_type != 1 && (
@@ -33,7 +38,12 @@ function Navbar() {
             )}
             {userContext.user_type != 1 && (
                <li>
-                  <NavLink to="/user/myAppliments">See Your appliments</NavLink>
+                  <NavLink to="/user/acceptedAppliments">See all accepted appliments</NavLink>
+               </li>
+            )}
+            {userContext.user_type != 1 && (
+               <li>
+                  <NavLink to="/user/pendingAppliments">See Your pending appliments</NavLink>
                </li>
             )}
             <li>

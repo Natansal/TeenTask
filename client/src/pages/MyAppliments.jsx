@@ -4,17 +4,17 @@ import { UserContext } from "../App";
 import Loading from "./Loader";
 import Job from "../components/job";
 
-function MyAppliments() {
+function MyAppliments({ accepted }) {
    const { userContext, myAlert } = useContext(UserContext);
    const [appliments, setAppliments] = useState();
    useEffect(() => {
-      fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}`, {
+      fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}&accepted=${accepted ? 1 : 0}`, {
          method: "GET",
          credentials: "include",
       })
          .then((res) => res.json())
          .then((res) => setAppliments(res));
-   }, [userContext]);
+   }, [userContext, accepted]);
 
    if (!appliments) {
       return <Loading />;

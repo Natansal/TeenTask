@@ -4,12 +4,12 @@ import { UserContext } from "../App";
 import serverAdress from "../serverAdress";
 import Job from "../components/job";
 
-function EmployerJobs() {
+function EmployerJobs({ done }) {
    const [jobs, setJobs] = useState();
    const { userContext, myAlert } = useContext(UserContext);
    const [num, setNum] = useState(0);
    useEffect(() => {
-      fetch(`${serverAdress}/jobs?user_id=${userContext.userId}`, {
+      fetch(`${serverAdress}/jobs?user_id=${userContext.userId}${done ? "&done=1" : "&done=0"}`, {
          method: "GET",
          credentials: "include",
       })
@@ -18,14 +18,14 @@ function EmployerJobs() {
             res = res.sort((a, b) => (a.city === userContext.city ? 1 : -1));
             setJobs(res);
          });
-   }, [userContext, num]);
+   }, [userContext, num, done]);
 
    if (!jobs) {
       return <Loading />;
    }
 
    function update() {
-      setNum(prev => prev + 1);
+      setNum((prev) => prev + 1);
    }
    return (
       <div>
