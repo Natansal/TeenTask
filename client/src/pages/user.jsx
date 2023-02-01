@@ -32,7 +32,9 @@ function HomePage() {
       <div>
          <h1>Hello {firstName}</h1>
          <Navbar />
-         <Outlet />
+         <div className="pageContainer">
+            <Outlet />
+         </div>
       </div>
    );
 }

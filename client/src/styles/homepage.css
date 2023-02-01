@@ -1,0 +1,10 @@
+
+
+.logo {
+    background-image: url(localhost:8000/images/logo.png);
+}
+
+.logoPage {
+    height: 100%;
+    width: 100%;
+}

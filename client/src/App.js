@@ -13,6 +13,7 @@ import UpdateBankInfo from "./pages/UpdateBankInfo";
 import Jobs from "./pages/allJobs";
 import MyAppliments from "./pages/MyAppliments";
 import Alert from "./components/Alert";
+import "./styles/homepage.css"
 
 export const UserContext = createContext();
 
@@ -128,7 +129,12 @@ function App() {
                >
                   <Route
                      path=""
-                     element={<div className="logoPage"></div>}
+                     element={
+                        <div className="logoPage">
+                           <h1>Welcome to TeenTask</h1>
+                           <div className="logo"></div>
+                        </div>
+                     }
                   />
                   <Route
                      path="userInfo"
