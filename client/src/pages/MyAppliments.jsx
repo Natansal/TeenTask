@@ -7,6 +7,7 @@ import Job from "../components/job";
 function MyAppliments({ accepted }) {
    const { userContext, myAlert } = useContext(UserContext);
    const [appliments, setAppliments] = useState();
+   const [num, setNum] = useState(0);
    useEffect(() => {
       fetch(`${serverAdress}/jobs/*?user_id=${userContext.userId}&accepted=${accepted ? 1 : 0}`, {
          method: "GET",
@@ -14,10 +15,13 @@ function MyAppliments({ accepted }) {
       })
          .then((res) => res.json())
          .then((res) => setAppliments(res));
-   }, [userContext, accepted]);
+   }, [userContext, accepted, num]);
 
    if (!appliments) {
       return <Loading />;
+   }
+   function update() {
+      setNum(prev => prev + 1);
    }
    function handleDelete(job_id, eh_id) {
       fetch(`${serverAdress}/jobs/${job_id}/${eh_id}`, {
@@ -35,10 +39,11 @@ function MyAppliments({ accepted }) {
          });
    }
    return (
-      <div className="applimentsPage">
+      <div className="jobsPage">
          {appliments.map((job) => (
             <Job
                {...job}
+               update={update}
                appliedTo={true}
                handleClick={handleDelete}
             />

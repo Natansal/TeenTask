@@ -1,0 +1,54 @@
+.updatePage h4 {
+    margin: 2vh;
+    font-size: 15px;
+}
+
+.updatePage h1 {
+    font-size: 40px;
+    margin: 1.5vh;
+}
+
+.updatePage {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.createJob {
+    margin-top: 45vh;
+}
+
+#h1CreateJob {
+    margin-top: 20vh;
+}
+
+.rdtTime table {
+    margin-left: 28%;
+}
+
+td {
+    border: 2px solid black;
+}
+
+td:hover {
+    cursor: pointer;
+}
+
+table {
+    background-color: white;
+    margin-left: 11%;
+}
+
+.updatePage>form {
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px #82C3EC;
+}
+
+
+@media screen and (max-width: 600px) {
+    .updatePage h1 {
+        display: none;
+    }
+}

@@ -94,6 +94,7 @@ router.get("/:job_id", async function (req, res, next) {
          ["user_id", "job_id", "done", "description", "category", "payment", "start_date", "end_date", "payment_type"],
          ["eh_id", "paid", "accepted"],
          undefined,
+         undefined,
          queryObj,
       );
       res.status(200).send(emp);

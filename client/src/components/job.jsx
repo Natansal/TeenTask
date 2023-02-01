@@ -41,8 +41,7 @@ function Job(props) {
             console.log("here!", response);
             if (revertShow !== true) {
                setShowApplicants((prev) => (prev ? false : true));
-            }
-            else {
+            } else {
                props.update();
             }
          });
@@ -57,6 +56,7 @@ function Job(props) {
          .then((res) => {
             myAlert(res.message);
             showApplicantsClick(true);
+            props.update();
          });
    }
 
@@ -84,7 +84,7 @@ function Job(props) {
          });
    }
    return (
-      <div className="job">
+      <div className="infoPage job">
          {userContext.user_type != 1 && <h1>From: {first_name + " " + last_name}</h1>}
          <h2>Category: {category}</h2>
          <h2>Description: {description}</h2>
@@ -103,7 +103,7 @@ function Job(props) {
             </>
          )}
          {appliedTo !== undefined && accepted == 1 && done == 1 && <h2>Paid: {paid === 0 ? "Not yet" : "Yes"}</h2>}
-         {appliedTo !== undefined && accepted == 1 && done == 1 && <button onClick={setPaid}>Mark as paid </button>}
+         {appliedTo !== undefined && accepted == 1 && done == 1 && paid == 0 && <button onClick={setPaid}>Mark as paid </button>}
          {userContext.user_type != 1 && (
             <button onClick={() => handleClick(job_id, eh_id)}>
                {appliedTo ? "Delete appliment to this job" : "Apply to this job"}

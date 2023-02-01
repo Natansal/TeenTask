@@ -54,7 +54,11 @@ function Login() {
 
    return (
       <div className="loginPage">
-         <form className="loginForm" onSubmit={onSubmit}>
+         <form
+            className="loginForm"
+            onSubmit={onSubmit}
+         >
+            <h1>Login</h1>
             <input
                className="loginInput"
                type="text"
@@ -74,33 +78,20 @@ function Login() {
             <input
                className="loginSubmit"
                type="submit"
-               value="login"
+               value="Login"
             />
-            <button className="registrationButton" onClick={toRegstration}>Registration</button>
          </form>
+         <button
+            className="loginButton switch"
+            onClick={toRegstration}
+         >
+            Or register
+         </button>
       </div>
    );
 }
 
 export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect, useContext } from "react";
 // import { useNavigate } from "react-router-dom";

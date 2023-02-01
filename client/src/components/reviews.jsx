@@ -25,6 +25,10 @@ function Reviews({ user_id }) {
    }
    console.log(reviews);
    let avg = reviews.reduce((prev, cur) => prev + parseInt(cur.stars), 0) / reviews.length;
+   if (reviews.length === 0) {
+      avg = 0;
+   }
+   let reviewsNum = reviews.length;
    return (
       <div className="reviews">
          <StarDisplay stars={avg} />
@@ -39,6 +43,7 @@ function Reviews({ user_id }) {
                />
             );
          })}
+         {reviewsNum === 0 && <h3>This employee has no reviews...</h3>}
       </div>
    );
 }

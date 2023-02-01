@@ -28,7 +28,7 @@ function EmployerJobs({ done }) {
       setNum((prev) => prev + 1);
    }
    return (
-      <div>
+      <div className="jobsPage">
          {jobs.map((job, index) => (
             <Job
                update={update}

@@ -72,6 +72,7 @@ function Registration() {
    return (
       <div className="registrationPage">
          <form onSubmit={onSubmit}>
+            <h1>Register</h1>
             <input
                type="text"
                placeholder="username"
@@ -101,8 +102,7 @@ function Registration() {
                value={user_info.last_name}
             />
 
-
-            <label className="center">Please selcet usertype</label>
+            <label className="center">Selcet account type</label>
             <select
                className="center"
                value={user_info.user_type}
@@ -114,7 +114,6 @@ function Registration() {
             </select>
             <label className="center">Date of birth</label>
             <input
-               className="center"
                id="birthDate"
                type="date"
                placeholder="Birth Date"
@@ -160,10 +159,15 @@ function Registration() {
             />
             <input
                type="submit"
-               value="Sgin up"
+               value="Sign up"
             />
-            <button onClick={tologIn}>Login</button>
          </form>
+         <button
+            className="switch"
+            onClick={tologIn}
+         >
+            Or login
+         </button>
       </div>
    );
 }

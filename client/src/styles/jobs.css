@@ -1,0 +1,31 @@
+.job button {
+    margin-top: 6%;
+}
+
+.applicant h1 {
+    font-size: 20px;
+}
+
+.reviewForm {
+    margin-top: 5px;
+}
+
+textarea {
+    text-align: left;
+    padding: 1px;
+}
+
+@media screen and (max-width: 560px) {
+    /* .job h2 {
+        text-align: center;
+    } */
+    .job{
+        width: 90vw;
+    }
+    .reviewForm>form{
+        box-shadow: none;
+    }
+    .reviewForm textarea{
+        width: 70vw;
+    }
+}

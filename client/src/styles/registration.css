@@ -14,22 +14,36 @@
 }
 
 .center {
-   width: 20.5vw;
    height: 4vh;
    margin: 1vh;
-   font-size: 2vh;
    display: inline-block;
 }
 
 #birthDate {
-
-   margin-left: 2vw;
    display: flex;
    align-items: center;
 }
 
-label,
-input[type="date"] {
-   display: inline-block;
-   margin-right: 2vw;
+
+.registrationPage button {
+   width: 200px;
+   margin-top: 2vh;
+}
+
+
+@media screen and (max-width: 500px) {
+
+   form {
+      width: auto;
+      max-width: 400px;
+      min-width: 350px;
+   }
+
+   .registrationPage>form>* {
+      font-size: 15px;
+   }
+
+   .registrationPage>form>h1 {
+      font-size: 25px;
+   }
 }

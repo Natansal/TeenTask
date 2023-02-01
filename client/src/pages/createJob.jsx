@@ -93,14 +93,20 @@ function CreateJob() {
             body: JSON.stringify({ user_id: userContext.userId, ...formData }),
          })
             .then((res) => res.json())
-            .then((answer) => myAlert(answer.message));
+            .then((answer) => {
+               myAlert(answer.message);
+               navigate("/user/pendingJobs");
+            });
       }
    };
 
    return (
-      <form onSubmit={handleSubmit}>
-         <div>
-            <label htmlFor="description">Description:</label>
+      <div className="updatePage">
+         <form
+            className="createJob"
+            onSubmit={handleSubmit}
+         >
+            <label htmlFor="description">Job description:</label>
             <input
                type="text"
                id="description"
@@ -109,10 +115,8 @@ function CreateJob() {
                onChange={handleChange}
             />
             {errors.description && <p>{errors.description}</p>}
-         </div>
 
-         <div>
-            <label htmlFor="category">Category:</label>
+            <label htmlFor="category">Job category:</label>
             <select
                id="category"
                name="category"
@@ -127,9 +131,7 @@ function CreateJob() {
                <option value="Other">Other</option>
             </select>
             {errors.category && <p>{errors.category}</p>}
-         </div>
 
-         <div>
             <label htmlFor="payment">Payment:</label>
             <input
                type="text"
@@ -139,8 +141,6 @@ function CreateJob() {
                onChange={handleChange}
             />
             {errors.payment && <p>{errors.payment}</p>}
-         </div>
-         <div>
             <label htmlFor="payment_type">Payment Type:</label>
             <select
                id="payment_type"
@@ -153,9 +153,6 @@ function CreateJob() {
                <option value="Credit">Credit</option>
             </select>
             {errors.payment_type && <p>{errors.payment_type}</p>}
-         </div>
-
-         <div>
             <label htmlFor="start_date">Start Date:</label>
             <Datetime
                type="date"
@@ -166,9 +163,6 @@ function CreateJob() {
                ref={start_date}
             />
             {errors.start_date && <p>{errors.start_date}</p>}
-         </div>
-
-         <div>
             <label htmlFor="end_date">End Date:</label>
             <Datetime
                type="date"
@@ -179,10 +173,10 @@ function CreateJob() {
                ref={end_date}
             />
             {errors.end_date && <p>{errors.end_date}</p>}
-         </div>
 
-         <button type="submit">Submit</button>
-      </form>
+            <button type="submit">Submit</button>
+         </form>
+      </div>
    );
 }
 

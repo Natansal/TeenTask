@@ -13,10 +13,14 @@ import UpdateBankInfo from "./pages/UpdateBankInfo";
 import Jobs from "./pages/allJobs";
 import MyAppliments from "./pages/MyAppliments";
 import Alert from "./components/Alert";
-import "./styles/homepage.css";
 import "./styles/index.css";
+import "./styles/homepage.css";
+import "./styles/userInfo.css";
 import "./styles/login.css";
 import "./styles/registration.css";
+import "./styles/updateInfo.css";
+import "./styles/jobs.css";
+import "./styles/review.css";
 
 export const UserContext = createContext();
 
@@ -134,7 +138,9 @@ function App() {
                      path=""
                      element={
                         <div className="logoPage">
-                           <h1>Welcome to TeenTask</h1>
+                           <h1>
+                              <i>Welcome to TeenTask</i>
+                           </h1>
                            <div className="logo"></div>
                         </div>
                      }

@@ -8,7 +8,7 @@ function Navbar() {
       <nav>
          <ul>
             <li>
-               <NavLink to="/user/userInfo">User Info</NavLink>
+               <NavLink to="/user/userInfo">User Information</NavLink>
             </li>
             <li>
                <NavLink to="/user/updatePage">Update Information Page</NavLink>

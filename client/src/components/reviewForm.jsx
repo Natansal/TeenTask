@@ -32,31 +32,35 @@ function ReviewForm({ target_id }) {
    };
 
    return (
-      <form
-         className="reviewForm"
-         onSubmit={handleSubmit}
-      >
-         <textarea
-            name="body"
-            value={formData.body}
-            onChange={handleChange}
-            maxLength={255}
-         />
-         <span>{255 - formData.body.length} characters remaining</span>
-         <select
-            name="stars"
-            value={formData.stars}
-            onChange={handleChange}
+      <div className="updatePage reviewForm">
+         <form
+            className="reviewForm"
+            onSubmit={handleSubmit}
          >
-            <option value="">Select a rating</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-         </select>
-         <button type="submit">Submit</button>
-      </form>
+            <textarea
+               name="body"
+               value={formData.body}
+               onChange={handleChange}
+               maxLength={255}
+               cols={40}
+               rows={6}
+            />
+            <span>{255 - formData.body.length} characters remaining</span>
+            <select
+               name="stars"
+               value={formData.stars}
+               onChange={handleChange}
+            >
+               <option value="">Select a rating</option>
+               <option value="1">1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+            </select>
+            <button type="submit">Submit</button>
+         </form>
+      </div>
    );
 }
 

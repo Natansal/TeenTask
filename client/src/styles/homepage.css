@@ -1,10 +1,174 @@
+.homePage {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.homePage>header {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    background-color: #82C3EC;
+    box-sizing: border-box;
+    border: 2px solid black;
+}
+
+.homePage>header h1 {
+    flex: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 5vw;
+}
+
+#teenTask {
+    align-self: left;
+    flex: 1;
+    font-size: 4vw;
+    color: rgb(255, 183, 0);
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.homePage>header .logo {
+    height: 100%;
+    width: 13%;
+}
+
+.homePage>nav {
+    height: 80%;
+    width: 13%;
+    background-color: #82C3EC;
+}
+
+.homePage>nav ul {
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.homePage>nav ul li {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.homePage>nav ul li a:link,
+.homePage>nav ul li a:active,
+.homePage>nav ul li a:visited {
+    text-decoration: none;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.homePage>nav a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+}
+
+.homePage>nav ul li a:hover {
+    color: #31175c;
+    font-size: 1.2em;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.141);
+}
+
+.active {
+    background-color: #4B56D2;
+    color: whitesmoke !important;
+}
+
+.pageContainer {
+    height: 80%;
+    width: 87%;
+    display: flex;
+    justify-content: center;
+    background-color: #F1F6F5;
+    overflow-y: scroll;
+}
 
 
 .logo {
-    background-image: url(localhost:8000/images/logo.png);
+    background-image: url(../images/logo.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .logoPage {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.logoPage>h1,
+i {
+    font-size: 100px;
+    color: rgb(255, 183, 0);
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+}
+
+
+.logo:not(header .logo) {
+    height: 80vh;
+    width: 80vw;
+}
+
+@media screen and (max-width: 600px) {
+    .homePage {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .homePage>header {
+        height: 8%;
+    }
+
+    .homePage>nav {
+        flex-direction: row;
+        width: 100%;
+        height: 15%;
+        overflow: scroll;
+    }
+
+    .homePage>nav ul {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .homePage>nav ul li {
+        height: 100%;
+        width: 35vw;
+        flex: none;
+    }
+
+    .pageContainer {
+        width: 100%;
+        height: 77%;
+    }
+
+    .homePage>nav a {
+        border: 2px solid black;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
 }

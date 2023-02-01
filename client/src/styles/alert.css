@@ -28,3 +28,10 @@
     background-color: #a94442;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.363);
 }
+
+@media screen and (max-width: 600px){
+    .alert{
+        width: 80vw;
+        left: 5vw;
+    }
+}

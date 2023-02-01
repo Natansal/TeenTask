@@ -90,69 +90,76 @@ function UpdateBankInfo() {
    }
 
    return (
-      <form onSubmit={handleSubmit}>
-         <label htmlFor="bank_account">Bank Account Number:</label>
-         <input
-            id="bank_account"
-            name="bank_account"
-            type="text"
-            value={values.bank_account}
-            onChange={handleChange}
-         />
-         {errors.bank_account && <p style={{ color: "red" }}>{errors.bank_account}</p>}
+      <div className="updatePage">
+         <h1>Update your bank information</h1>
+         <form onSubmit={handleSubmit}>
+            <h4>
+               *We will never send this data any where!<br />
+               note that this is optional
+            </h4>
+            <label htmlFor="bank_account">Bank Account Number:</label>
+            <input
+               id="bank_account"
+               name="bank_account"
+               type="text"
+               value={values.bank_account}
+               onChange={handleChange}
+            />
+            {errors.bank_account && <p style={{ color: "red" }}>{errors.bank_account}</p>}
 
-         <label htmlFor="card_type">Credit Card Type:</label>
-         <select
-            name="card_type"
-            id="card_type"
-            value={values.card_type}
-            onChange={handleChange}
-         >
-            <option value="">Select a Type</option>
-            <option value="visa">Visa</option>
-            <option value="mastercard">Mastercard</option>
-            <option value="amex">American Express</option>
-         </select>
-         {errors.card_type && <p style={{ color: "red" }}>{errors.card_type}</p>}
-         <label htmlFor="card_num">Card Number:</label>
-         <input
-            id="card_num"
-            name="card_num"
-            type="text"
-            value={values.card_num}
-            onChange={handleChange}
-         />
-         {errors.card_num && <p style={{ color: "red" }}>{errors.card_num}</p>}
+            <label htmlFor="card_type">Credit Card Type:</label>
+            <select
+               name="card_type"
+               id="card_type"
+               value={values.card_type}
+               onChange={handleChange}
+            >
+               <option value="">Select a Type</option>
+               <option value="visa">Visa</option>
+               <option value="mastercard">Mastercard</option>
+               <option value="amex">American Express</option>
+            </select>
+            {errors.card_type && <p style={{ color: "red" }}>{errors.card_type}</p>}
+            <label htmlFor="card_num">Card Number:</label>
+            <input
+               id="card_num"
+               name="card_num"
+               type="text"
+               value={values.card_num}
+               onChange={handleChange}
+            />
+            {errors.card_num && <p style={{ color: "red" }}>{errors.card_num}</p>}
 
-         <label htmlFor="exp_date">Expiration Date:</label>
-         <input
-            id="exp_date"
-            name="exp_date"
-            type="text"
-            value={values.exp_date}
-            onChange={handleChange}
-         />
-         {errors.exp_date && <p style={{ color: "red" }}>{errors.exp_date}</p>}
+            <label htmlFor="exp_date">Expiration Date:</label>
+            <input
+               id="exp_date"
+               name="exp_date"
+               type="text"
+               value={values.exp_date}
+               onChange={handleChange}
+            />
+            {errors.exp_date && <p style={{ color: "red" }}>{errors.exp_date}</p>}
 
-         <label htmlFor="cvv">CVV:</label>
-         <input
-            id="cvv"
-            name="cvv"
-            type="text"
-            value={values.cvv}
-            onChange={handleChange}
-         />
-         {errors.cvv && <p style={{ color: "red" }}>{errors.cvv}</p>}
-         <label htmlFor="password">Password:</label>
-         <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-         />
-         {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
-         <button type="submit">Submit</button>
-      </form>
+            <label htmlFor="cvv">CVV:</label>
+            <input
+               id="cvv"
+               name="cvv"
+               type="text"
+               value={values.cvv}
+               onChange={handleChange}
+            />
+            {errors.cvv && <p style={{ color: "red" }}>{errors.cvv}</p>}
+            <label htmlFor="password">Password:</label>
+            <input
+               type="password"
+               name="password"
+               value={password}
+               onChange={handleChange}
+            />
+            {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+            <button type="submit">Submit</button>
+         </form>
+      </div>
    );
 }
 

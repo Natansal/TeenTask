@@ -47,19 +47,13 @@ function Applicants(props) {
       setReviewsVis((prev) => !prev);
    }
    return (
-      <div>
-         <h4>
-            Full Applicent Name: {props.first_name} {props.last_name}
-         </h4>
-         <h4>
-            {props.first_name}'s birth date: {new Date(props.birth_date).toDateString()}
-         </h4>
+      <div className="applicant infoPage">
          {props.accepted == 1 && (
             <>
                <h1>
                   You have accept {props.first_name} to be your employee!
                   <br />
-                  Here is contact information
+                  Here is {props.first_name}'s contact information
                </h1>
                <h4>
                   {props.first_name}'s email: {props.email}
@@ -69,6 +63,12 @@ function Applicants(props) {
                </h4>
             </>
          )}
+         <h4>
+            Full Applicent Name: {props.first_name} {props.last_name}
+         </h4>
+         <h4>
+            {props.first_name}'s birth date: {new Date(props.birth_date).toDateString()}
+         </h4>
          {props.accepted == 0 && (
             <>
                <button onClick={showReview}>See {props.first_name}'s review</button>
