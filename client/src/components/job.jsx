@@ -5,6 +5,10 @@ import { UserContext } from "../App";
 import serverAdress from "../serverAdress";
 import Applicants from "./applicants";
 
+
+function captalizeFirst(inputString) {
+   return inputString.charAt(0).toUpperCase() + inputString.slice(1).toLowerCase();
+}
 function Job(props) {
    const { userContext, myAlert } = useContext(UserContext);
    const [applicants, setApplicants] = useState([]);
@@ -92,7 +96,7 @@ function Job(props) {
          <h2>Start date: {new Date(start_date).toLocaleString()}</h2>
          <h2>End date: {new Date(end_date).toLocaleString()}</h2>
          <h2>Payment type: {payment_type}</h2>
-         <h2>Loaction: {`${city}, ${state}`}</h2>
+         <h2>Loaction: {`${captalizeFirst(city)}, ${captalizeFirst(state)}`}</h2>
          {accepted !== undefined && <h2>Status: {accepted === 1 ? "Accepted" : "Pending"}</h2>}
          {appliedTo !== undefined && accepted == 1 && <h2>Done: {done === 0 ? "Not yet" : "Yes"}</h2>}
          {userContext.user_type != 0 && (

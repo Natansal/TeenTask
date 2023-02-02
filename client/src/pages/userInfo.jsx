@@ -47,7 +47,7 @@ function UserInfo() {
          <h2>State: {userInfo[0].state}</h2>
          {userInfo[0].bank_account != undefined &&
             <h2>Bank account number: {userInfo[0].bank_account}</h2>}
-         {userContext.user_type != 0 && userInfo[0].card_num != undefined && (
+         {userInfo[0].card_num != undefined && (
             <h2>Credit card number: {"****" + userInfo[0].card_num.slice(-4)}</h2>
          )}
          <h2>Account created on: {new Date(userInfo[0].creation_date).toLocaleDateString()}</h2>
